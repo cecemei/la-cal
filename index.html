@@ -1,0 +1,318 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Luma Calendar</title>
+
+<style>
+  :root {
+    --paper: #ffffff;
+    --ink: #1a1a1a;
+    --ink-soft: #666666;
+    --line: #dddddd;
+    --link: #0645ad;
+    --cat-bg: #f0f0f0;
+    --hl-near-bg: #c8f0c0;
+    --hl-near-border: #3f9142;
+    --hl-mid-bg: #eceff1;
+    --hl-mid-border: #9aa0a6;
+    --hl-near-link: #2f6627;
+    --hl-mid-link: #52585e;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #14181a;
+      --ink: #e7e9ea;
+      --ink-soft: #9aa3a8;
+      --line: #2c3336;
+      --link: #7fb0ff;
+      --cat-bg: #232a2d;
+      --hl-near-bg: #1f3d1a;
+      --hl-near-border: #5cba54;
+      --hl-mid-bg: #262b2e;
+      --hl-mid-border: #7a8288;
+      --hl-near-link: #8fd685;
+      --hl-mid-link: #c3c9ce;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #14181a; --ink: #e7e9ea; --ink-soft: #9aa3a8; --line: #2c3336;
+    --link: #7fb0ff; --cat-bg: #232a2d; --hl-near-bg: #1f3d1a; --hl-near-border: #5cba54;
+    --hl-mid-bg: #262b2e; --hl-mid-border: #7a8288; --hl-near-link: #8fd685; --hl-mid-link: #c3c9ce;
+  }
+  :root[data-theme="light"] {
+    --paper: #ffffff; --ink: #1a1a1a; --ink-soft: #666666; --line: #dddddd;
+    --link: #0645ad; --cat-bg: #f0f0f0; --hl-near-bg: #c8f0c0; --hl-near-border: #3f9142;
+    --hl-mid-bg: #eceff1; --hl-mid-border: #9aa0a6; --hl-near-link: #2f6627; --hl-mid-link: #52585e;
+  }
+  body { font-family: -apple-system, sans-serif; max-width: 1500px; margin: 40px auto; padding: 0 16px; color: var(--ink); background: var(--paper); }
+  h1 { font-size: 1.4rem; }
+  .week-grid { display: flex; gap: 10px; overflow-x: auto; align-items: flex-start; }
+  .day-col { flex: 1 0 190px; min-width: 190px; }
+  .event-list { column-gap: 10px; }
+  .event-list .event { break-inside: avoid; }
+  .day-header { font-size: 0.95rem; font-weight: 600; border-bottom: 2px solid var(--line); padding-bottom: 6px; margin-bottom: 8px; }
+  .day-header .count { color: var(--ink-soft); font-weight: 400; font-size: 0.8rem; }
+  .event { padding: 6px 8px; border-radius: 6px; margin-bottom: 6px; border: 1.5px solid #ccc; }
+  .event a { display: block; font-weight: 600; font-size: 1rem; text-decoration: none; color: var(--link); }
+  .event a:hover, .event a:focus-visible { text-decoration: underline; }
+  .meta { color: var(--ink-soft); font-size: 0.75rem; margin-top: 2px; }
+  .desc { color: var(--ink); opacity: 0.85; font-size: 0.75rem; margin-top: 4px; }
+  .cat { display: inline-block; background: var(--cat-bg); border-radius: 4px; padding: 1px 5px; font-size: 0.7rem; margin-right: 3px; }
+  .hl-near { background: var(--hl-near-bg); }
+  .hl-near a { color: var(--hl-near-link); }
+  .hl-mid { background: var(--hl-mid-bg); }
+  .hl-mid a { color: var(--hl-mid-link); }
+  .event.far { padding: 4px 8px; }
+  .event.far a { font-weight: 400; font-size: 0.8rem; color: var(--ink-soft); }
+  .event.far .meta { font-size: 0.68rem; }
+  .event.far .desc { display: none; }
+  .empty { color: var(--ink-soft); font-size: 0.8rem; font-style: italic; }
+  .legend-row { display: flex; flex-wrap: wrap; gap: 28px; margin-bottom: 14px; }
+  .legend { display: flex; flex-direction: column; gap: 6px; }
+  .legend-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-soft); opacity: 0.8; }
+  .legend-items { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size: 0.8rem; color: var(--ink-soft); }
+  .legend-items div { display: flex; align-items: center; white-space: nowrap; }
+  .legend-items span { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; flex-shrink: 0; }
+  .scroll-hint { font-size: 0.75rem; color: var(--ink-soft); margin-bottom: 12px; }
+  .week-grid { scrollbar-width: thin; scrollbar-color: var(--line) transparent; padding-bottom: 8px; }
+  .week-grid::-webkit-scrollbar { height: 8px; }
+  .week-grid::-webkit-scrollbar-track { background: transparent; }
+  .week-grid::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+</style>
+</head>
+<body>
+<h1>Next 7 Days</h1>
+<div class="legend-row">
+  <div class="legend">
+    <div class="legend-label">Distance</div>
+    <div class="legend-items">
+      <div><span style="background: #c8f0c0; border: 1px solid #3f9142;"></span>Within 3 km</div>
+      <div><span style="background: #eceff1; border: 1px solid #9aa0a6;"></span>Within 8 km</div>
+      <div><span style="background: none; border: 1px solid var(--line);"></span>Farther (quieter card)</div>
+    </div>
+  </div>
+  <div class="legend">
+    <div class="legend-label">Time of day (card frame)</div>
+    <div class="legend-items">
+      <div><span style="background: #4a90d9;"></span>Morning</div>
+      <div><span style="background: #f0a202;"></span>Afternoon</div>
+      <div><span style="background: #8e44ad;"></span>Evening</div>
+      <div><span style="background: #2c3e50;"></span>Late night</div>
+    </div>
+  </div>
+</div>
+<div class="scroll-hint">Scroll sideways for more days →</div>
+<div class="week-grid"><div class="day-col" style="flex: 1 0 190px; min-width: 190px;"><div class="day-header">Sat, Jul 25 <span class="count">(9)</span></div><div class="event-list" style="">
+    <div class="event hl-mid" style="border-color: #4a90d9;">
+      <a href="https://lu.ma/women-p2pl" target="_blank">From Zero to Auto: A Hands-On AI Automation Workshop for Women + Nonbinary Leaders 🤖⚡</a>
+      <div class="meta">10:00–12:30 PM · 150 Horizon Ave, Venice, CA 90291, USA · 4.6 km <span class="cat">ai</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #4a90d9;">
+      <a href="https://lu.ma/hwk0jh3u" target="_blank">Founders Table: Sip Scale Strategize</a>
+      <div class="meta">11:00–2:00 PM · Hollywood, Los Angeles, CA · 14.4 km <span class="cat">tech</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #f0a202;">
+      <a href="https://lu.ma/pywvj9ag" target="_blank">Open Workshop @ Silicon Beach Maker Space</a>
+      <div class="meta">12:00–4:00 PM · Jefferson Park, Los Angeles, CA · 9.3 km <span class="cat">tech</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #f0a202;">
+      <a href="https://lu.ma/mdhb9xdq" target="_blank">Silky&#x27;s Southern Comfort</a>
+      <div class="meta">12:00–10:00 PM · Los Feliz, Los Angeles, CA · 18.4 km <span class="cat">food</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #f0a202;">
+      <a href="https://lu.ma/mjnn2n8f" target="_blank">Free Non-Alcoholic Gin Tasting with Empress 1908</a>
+      <div class="meta">1:00–4:00 PM · Burden of Proof, 1012 Mission St, South Pasadena, CA 91030, USA · 28.0 km <span class="cat">food</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #f0a202;">
+      <a href="https://lu.ma/eyshvgfv" target="_blank">Sandbox Summer Bar Crawl 2026</a>
+      <div class="meta">1:00–7:00 PM · 531 N Pacific Coast Hwy, Redondo Beach, CA 90277, USA · 16.4 km <span class="cat">food</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/farmdinnerforacause" target="_blank">Casa de la Familia Fundraiser</a>
+      <div class="meta">5:00–8:00 PM · 7524 E Saddlehill Trail, Orange, CA 92869, USA · 63.7 km <span class="cat">food</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/haps-club-the-long-table" target="_blank">Haps Club x The Long Table Dinner Series</a>
+      <div class="meta">6:00–9:00 PM · Chesterfield Square, Los Angeles, CA · 9.9 km <span class="cat">food</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/accmjxwm" target="_blank">Wax &amp; Burgundy</a>
+      <div class="meta">6:30–10:00 PM · Vendome Wines &amp; Spirits, 10600 Riverside Dr, North Hollywood, CA 91602, USA · 18.3 km <span class="cat">food</span></div>
+      
+    </div>
+    </div></div><div class="day-col" style="flex: 1 0 190px; min-width: 190px;"><div class="day-header">Sun, Jul 26 <span class="count">(1)</span></div><div class="event-list" style="">
+    <div class="event far" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/ttiirfes" target="_blank">Festa Della Domenica</a>
+      <div class="meta">5:30–10:00 PM · 1606 Sunset Blvd, Los Angeles, CA 90026, USA · 17.7 km <span class="cat">food</span></div>
+      
+    </div>
+    </div></div><div class="day-col" style="flex: 1 0 190px; min-width: 190px;"><div class="day-header">Mon, Jul 27 <span class="count">(1)</span></div><div class="event-list" style="">
+    <div class="event far" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/pyqvhcf5" target="_blank">New Money: LA Dinner</a>
+      <div class="meta">6:30–9:30 PM · Central LA, West Hollywood, CA · 12.0 km <span class="cat">tech</span></div>
+      
+    </div>
+    </div></div><div class="day-col" style="flex: 1 0 190px; min-width: 190px;"><div class="day-header">Tue, Jul 28 <span class="count">(6)</span></div><div class="event-list" style="">
+    <div class="event hl-mid" style="border-color: #4a90d9;">
+      <a href="https://lu.ma/LAGrindPolsinelliCoWorking3" target="_blank">The LA Grind: Founder Co-Working &amp; Free Lunch w/ Polsinelli</a>
+      <div class="meta">10:00–3:00 PM · Century City, Los Angeles, California · 7.3 km <span class="cat">tech</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #4a90d9;">
+      <a href="https://lu.ma/jbjihwxs" target="_blank">Sharpen Your Product Idea with Gemini Workshop hosted by DTLB Alliance</a>
+      <div class="meta">11:00–12:30 PM · Downtown Long Beach Alliance (DTLB Alliance), 100 W Broadway #235, Long Beach, CA 90802, USA · 32.9 km <span class="cat">ai</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/zf4icuij" target="_blank">after hours: a happy hour for la&#x27;s creatives and founders</a>
+      <div class="meta">5:30–7:00 PM · Tu Madre - West Hollywood, 1111 Hayworth Ave, Los Angeles, CA 90046, USA · 12.0 km <span class="cat">tech</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/hw3fs8wp" target="_blank">AI in Production: The Agent Economy and High-Stakes AI Decisions</a>
+      <div class="meta">6:00–8:00 PM · Las Lomas Community Park, 10 Federation Way, Irvine, CA 92603, USA · 68.2 km <span class="cat">ai</span></div>
+      
+    </div>
+    
+    <div class="event hl-mid" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/3mgi8r5r" target="_blank">Build Your Human Advantage in the Age of AI</a>
+      <div class="meta">6:00–8:30 PM · The Culver Hotel, 9400 Culver Blvd, Culver City, CA 90232, USA · 4.1 km <span class="cat">ai</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/agp1h2b6" target="_blank">Women of SaaS Los Angeles – Networking Mixer | Pasadena</a>
+      <div class="meta">6:30–8:00 PM · PlayLab Beauty, 25 N Fair Oaks Ave, Pasadena, CA 91103, USA · 30.2 km <span class="cat">tech</span></div>
+      
+    </div>
+    </div></div><div class="day-col" style="flex: 1 0 190px; min-width: 190px;"><div class="day-header">Wed, Jul 29 <span class="count">(6)</span></div><div class="event-list" style="">
+    <div class="event hl-mid" style="border-color: #4a90d9;">
+      <a href="https://lu.ma/LAGrindClubCoffee7" target="_blank">Members Coffee Meetup - Santa Monica</a>
+      <div class="meta">8:00–9:30 AM · Mid-City, Santa Monica, California · 6.6 km <span class="cat">tech</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #4a90d9;">
+      <a href="https://lu.ma/ojp0vbqe" target="_blank">2006 Summer Session #6: Growth/HR Policies. 1:1 Office Hours with Ed Chan</a>
+      <div class="meta">10:00–12:10 PM · UCLA Anderson School of Management, 110 Westwood Plaza, Los Angeles, CA 90095, USA · 9.0 km <span class="cat">tech</span></div>
+      
+    </div>
+    
+    <div class="event hl-mid" style="border-color: #4a90d9;">
+      <a href="https://lu.ma/audos-zjeb" target="_blank">Cafe Audos Los Angeles - go from an idea to business with unlimited building credits in &lt;1hr</a>
+      <div class="meta">11:00–3:00 PM · The KINN, 150 Horizon Ave, Venice, CA 90291, USA · 4.6 km <span class="cat">ai</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/ticket500-3ken" target="_blank">Orange County AI Vibe Coding</a>
+      <div class="meta">5:00–7:00 PM · 2807 Villa Way, Newport Beach, CA 92663, USA · 62.3 km <span class="cat">ai</span></div>
+      
+    </div>
+    
+    <div class="event hl-mid" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/ssa8jmpt" target="_blank">StartupExperts LA - Happy Hour and Speed Networking</a>
+      <div class="meta">5:30–7:30 PM · Father&#x27;s Office, 3229 Helms Ave, Los Angeles, CA 90034, USA · 5.3 km <span class="cat">tech</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/x80j119w" target="_blank">MediaTech After Dark: BUILDERS NIGHT AT THE GALLERY</a>
+      <div class="meta">6:00–9:00 PM · Central LA, Los Angeles, CA · 10.8 km <span class="cat">tech</span></div>
+      
+    </div>
+    </div></div><div class="day-col" style="flex: 2 0 390px; min-width: 390px;"><div class="day-header">Thu, Jul 30 <span class="count">(12)</span></div><div class="event-list" style="column-count: 2;">
+    <div class="event far" style="border-color: #4a90d9;">
+      <a href="https://lu.ma/ay68dfpm" target="_blank">Pitch &amp; Run LA: Run Club for Founders, Investors, and Tech</a>
+      <div class="meta">7:00–8:00 AM · Beverly Hills Garden Park, 9439 Santa Monica Blvd, Beverly Hills, CA 90210, USA · 8.8 km <span class="cat">tech</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #4a90d9;">
+      <a href="https://lu.ma/cnyoi03w" target="_blank">Grid110: Coffee, Community &amp; Co-Working</a>
+      <div class="meta">9:00–2:00 PM · Hilltop Coffee + Kitchen - DTLA, 718 S Hill St Ste 100, Los Angeles, CA 90014, USA · 16.4 km <span class="cat">tech</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/oneday-g83t" target="_blank">LA Founder Coworking Session + Social Hour with Special Guest Greg Monterrosa</a>
+      <div class="meta">5:00–8:00 PM · 1 Hotel West Hollywood, 8490 Sunset Blvd, West Hollywood, CA 90069, USA · 11.8 km <span class="cat">tech</span></div>
+      
+    </div>
+    
+    <div class="event hl-mid" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/ConsoleLA" target="_blank">IT and SecOps Happy Hour Santa Monica</a>
+      <div class="meta">5:30–8:00 PM · The Surfing Fox, 120 Colorado Ave, Santa Monica, CA 90401, USA · 6.8 km <span class="cat">ai</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/ljq9ugb6" target="_blank">OC Techqueria July Meetup</a>
+      <div class="meta">6:00–8:00 PM · Brewheim, 1931 E Wright Cir, Anaheim, CA 92806, USA · 53.4 km <span class="cat">tech</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/23xkb0nx" target="_blank">Pasadena Climate Happy Hour</a>
+      <div class="meta">6:00–8:30 PM · Chak De California, 98 E Colorado Blvd, Pasadena, CA 91105, USA · 30.3 km <span class="cat">tech</span></div>
+      
+    </div>
+    
+    <div class="event hl-mid" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/6pj3kjbc" target="_blank">AI in a DevOps World / Introducing MarkDown Context Protocol (MDCP)</a>
+      <div class="meta">6:00–9:00 PM · O&#x27;Briens Irish Pub, 2226 Wilshire Blvd, Santa Monica, CA 90403, USA · 6.8 km <span class="cat">ai</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/startout-aila-hh-july2026" target="_blank">StartOut x AI LA Happy Hour</a>
+      <div class="meta">6:00–8:00 PM · GYM Bar WeHo, 8919 Santa Monica Blvd, West Hollywood, CA 90069, USA · 10.6 km <span class="cat">ai</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/z3qkkwbg" target="_blank">Technical Co-Founder Wanted</a>
+      <div class="meta">6:00–8:00 PM · 2807 Villa Way, Newport Beach, CA 92663, USA · 62.3 km <span class="cat">ai</span></div>
+      
+    </div>
+    
+    <div class="event hl-mid" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/TheNatureOfNurture" target="_blank">The Nature Of Nurture Podcast LIVE: Leading With Intention In The Digital Age</a>
+      <div class="meta">6:00–8:30 PM · The KINN, 150 Horizon Ave, Venice, CA 90291, USA · 4.6 km <span class="cat">ai</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/09ycboux" target="_blank">Vertical Drama Salon</a>
+      <div class="meta">6:30–9:30 PM · 160 Glendale Blvd, Los Angeles, CA 90026, USA · 16.8 km <span class="cat">ai</span></div>
+      
+    </div>
+    
+    <div class="event far" style="border-color: #8e44ad;">
+      <a href="https://lu.ma/7ooaqofa" target="_blank">VIP Lounge at State Social House</a>
+      <div class="meta">7:00–9:00 PM · Sunset Strip, West Hollywood, CA · 11.1 km <span class="cat">tech</span></div>
+      
+    </div>
+    </div></div><div class="day-col" style="flex: 1 0 190px; min-width: 190px;"><div class="day-header">Fri, Jul 31 <span class="count">(0)</span></div><div class="empty">Nothing found</div></div></div>
+</body>
+</html>
