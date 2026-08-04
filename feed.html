@@ -6,33 +6,29 @@
 <style>
   :root {
     --paper: #ffffff; --ink: #1a1a1a; --ink-soft: #666666; --line: #dddddd; --link: #0645ad;
-    --cat-bg: #f0f0f0; --hl-near-bg: #dfeee0; --hl-near-border: #7aab7c; --hl-mid-bg: #eceff1;
-    --hl-mid-border: #9aa0a6; --hl-near-link: #3f7a45; --hl-mid-link: #52585e;
-    --standout-border: #c99a3f; --standout-glow: rgba(201, 154, 63, 0.35);
-    --standout-badge-bg: #f5e6c8; --standout-badge-ink: #7a5b1e;
+    --cat-bg: #f0f0f0; --hl-near-bg: #eef6ee; --hl-near-border: #a9c9aa; --hl-mid-bg: #f2f3f4;
+    --hl-mid-border: #b7bcc0;
+    --standout-border: #c9ab6b; --standout-badge-bg: #f5ecd9; --standout-badge-ink: #7a5b1e;
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --paper: #14181a; --ink: #e7e9ea; --ink-soft: #9aa3a8; --line: #2c3336; --link: #7fb0ff;
-      --cat-bg: #232a2d; --hl-near-bg: #1c2b1c; --hl-near-border: #4d7a4f; --hl-mid-bg: #262b2e;
-      --hl-mid-border: #7a8288; --hl-near-link: #8fd685; --hl-mid-link: #c3c9ce;
-      --standout-border: #b3903f; --standout-glow: rgba(179, 144, 63, 0.35);
-      --standout-badge-bg: #3a3220; --standout-badge-ink: #e0c080;
+      --cat-bg: #232a2d; --hl-near-bg: #182019; --hl-near-border: #3f5c40; --hl-mid-bg: #202427;
+      --hl-mid-border: #565b5f;
+      --standout-border: #8a734a; --standout-badge-bg: #332c1c; --standout-badge-ink: #e0c080;
     }
   }
   :root[data-theme="dark"] {
     --paper: #14181a; --ink: #e7e9ea; --ink-soft: #9aa3a8; --line: #2c3336; --link: #7fb0ff;
-    --cat-bg: #232a2d; --hl-near-bg: #1c2b1c; --hl-near-border: #4d7a4f; --hl-mid-bg: #262b2e;
-    --hl-mid-border: #7a8288; --hl-near-link: #8fd685; --hl-mid-link: #c3c9ce;
-    --standout-border: #b3903f; --standout-glow: rgba(179, 144, 63, 0.35);
-    --standout-badge-bg: #3a3220; --standout-badge-ink: #e0c080;
+    --cat-bg: #232a2d; --hl-near-bg: #182019; --hl-near-border: #3f5c40; --hl-mid-bg: #202427;
+    --hl-mid-border: #565b5f;
+    --standout-border: #8a734a; --standout-badge-bg: #332c1c; --standout-badge-ink: #e0c080;
   }
   :root[data-theme="light"] {
     --paper: #ffffff; --ink: #1a1a1a; --ink-soft: #666666; --line: #dddddd; --link: #0645ad;
-    --cat-bg: #f0f0f0; --hl-near-bg: #dfeee0; --hl-near-border: #7aab7c; --hl-mid-bg: #eceff1;
-    --hl-mid-border: #9aa0a6; --hl-near-link: #3f7a45; --hl-mid-link: #52585e;
-    --standout-border: #c99a3f; --standout-glow: rgba(201, 154, 63, 0.35);
-    --standout-badge-bg: #f5e6c8; --standout-badge-ink: #7a5b1e;
+    --cat-bg: #f0f0f0; --hl-near-bg: #eef6ee; --hl-near-border: #a9c9aa; --hl-mid-bg: #f2f3f4;
+    --hl-mid-border: #b7bcc0;
+    --standout-border: #c9ab6b; --standout-badge-bg: #f5ecd9; --standout-badge-ink: #7a5b1e;
   }
   body { font-family: -apple-system, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 16px; color: var(--ink); background: var(--paper); }
   h1 { font-size: 1.4rem; }
@@ -44,9 +40,7 @@
   .desc { color: var(--ink); opacity: 0.85; font-size: 0.85rem; margin-top: 4px; }
   .cat { display: inline-block; background: var(--cat-bg); border-radius: 4px; padding: 1px 6px; font-size: 0.75rem; margin-right: 4px; }
   .hl-near { background: var(--hl-near-bg); }
-  .hl-near a { color: var(--hl-near-link); }
   .hl-mid { background: var(--hl-mid-bg); }
-  .hl-mid a { color: var(--hl-mid-link); }
   .badge-standout { display: inline-block; background: var(--standout-badge-bg); color: var(--standout-badge-ink); font-size: 0.7rem; font-weight: 600; padding: 1px 6px; border-radius: 999px; margin-top: 3px; }
   .legend-row { display: flex; flex-wrap: wrap; gap: 28px; margin: 16px 0 14px; }
   .legend { display: flex; flex-direction: column; gap: 6px; }
@@ -62,8 +56,8 @@
   <div class="legend">
     <div class="legend-label">Distance</div>
     <div class="legend-items">
-      <div><span style="background: #dfeee0; border: 1px solid #7aab7c;"></span>Within 8 km</div>
-      <div><span style="background: #eceff1; border: 1px solid #9aa0a6;"></span>Within 20 km</div>
+      <div><span style="background: #eef6ee; border: 1px solid #a9c9aa;"></span>Within 8 km</div>
+      <div><span style="background: #f2f3f4; border: 1px solid #b7bcc0;"></span>Within 20 km</div>
       <div><span style="background: none; border: 1px solid var(--line);"></span>Farther</div>
     </div>
   </div>
@@ -117,7 +111,7 @@
     </div>
     
 
-    <div class="event hl-mid standout" style="border-left-color: var(--standout-border); border-left-width: 6px; box-shadow: 0 0 0 3px var(--standout-glow);">
+    <div class="event hl-mid standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/later-lfdy" target="_blank">✨ Made You Look Tour: The LA Edit</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Tue, Aug 4 · 10:30 AM · Fashion District, Los Angeles, CA · 18.2 km away <span class="cat">ai</span></div>
@@ -560,7 +554,7 @@
     </div>
     
 
-    <div class="event hl-mid standout" style="border-left-color: var(--standout-border); border-left-width: 6px; box-shadow: 0 0 0 3px var(--standout-glow);">
+    <div class="event hl-mid standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/ad8y8vdp" target="_blank">✨ Maum Market LA</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Sat, Aug 1 · 11:00 AM · ROW DTLA, 777 S Alameda St, Los Angeles, CA 90021, USA · 17.3 km away <span class="cat">food</span></div>
@@ -1966,7 +1960,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near standout" style="border-left-color: var(--standout-border); border-left-width: 6px; box-shadow: 0 0 0 3px var(--standout-glow);">
+    <div class="event hl-near standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/avw5a3y9" target="_blank">✨ LA Agentic AI Meetup hosted by Pinecone</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Tue, Aug 11 · 5:00 PM · Gulp Restaurant &amp; Brew Co, 13020 Pacific Promenade #1, Los Angeles, CA 90094, USA · 2.5 km away <span class="cat">ai</span></div>
@@ -1982,7 +1976,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near standout" style="border-left-color: var(--standout-border); border-left-width: 6px; box-shadow: 0 0 0 3px var(--standout-glow);">
+    <div class="event hl-near standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/8y7t6ykg" target="_blank">✨ 🌟 HEY, SUNSHINE KITCHEN THREE YEAR ANNIVERSARY PARTY! 🌟</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Sun, Aug 2 · 11:00 AM · Hey, Sunshine Kitchen, 3863 Overland Ave, Culver City, CA 90232, USA · 2.8 km away <span class="cat">food</span></div>
@@ -1998,7 +1992,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near standout" style="border-left-color: var(--standout-border); border-left-width: 6px; box-shadow: 0 0 0 3px var(--standout-glow);">
+    <div class="event hl-near standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/DemoDayLAAug" target="_blank">✨ Demo Day LA - August 2026</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Thu, Aug 13 · 4:30 PM · BLANKSPACES Venice, 606 Venice Blvd., Venice, CA 90291, USA · 3.6 km away <span class="cat">tech</span></div>
@@ -2118,7 +2112,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near standout" style="border-left-color: var(--standout-border); border-left-width: 6px; box-shadow: 0 0 0 3px var(--standout-glow);">
+    <div class="event hl-near standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/hbx8dqlh" target="_blank">✨ Product.ai Golden Hour 006</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Wed, Aug 5 · 5:00 PM · Product.ai, 12100 Wilshire Blvd #950, Los Angeles, CA 90025, USA · 6.8 km away <span class="cat">tech</span></div>
@@ -2134,7 +2128,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near standout" style="border-left-color: var(--standout-border); border-left-width: 6px; box-shadow: 0 0 0 3px var(--standout-glow);">
+    <div class="event hl-near standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/ConsoleLA" target="_blank">✨ IT and SecOps Happy Hour Santa Monica</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Thu, Jul 30 · 5:30 PM · The Surfing Fox, 120 Colorado Ave, Santa Monica, CA 90401, USA · 6.8 km away <span class="cat">ai</span></div>
@@ -2318,7 +2312,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid standout" style="border-left-color: var(--standout-border); border-left-width: 6px; box-shadow: 0 0 0 3px var(--standout-glow);">
+    <div class="event hl-mid standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/zf4icuij" target="_blank">✨ after hours: a happy hour for la&#x27;s creatives and founders</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Tue, Jul 28 · 5:30 PM · Tu Madre - West Hollywood, 1111 Hayworth Ave, Los Angeles, CA 90046, USA · 12.0 km away <span class="cat">tech</span></div>
@@ -2422,7 +2416,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid standout" style="border-left-color: var(--standout-border); border-left-width: 6px; box-shadow: 0 0 0 3px var(--standout-glow);">
+    <div class="event hl-mid standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/ttiirfes" target="_blank">✨ Festa Della Domenica</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Sun, Jul 26 · 5:30 PM · 1606 Sunset Blvd, Los Angeles, CA 90026, USA · 17.7 km away <span class="cat">food</span></div>
@@ -2486,7 +2480,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event standout" style="border-left-color: var(--standout-border); border-left-width: 6px; box-shadow: 0 0 0 3px var(--standout-glow);">
+    <div class="event standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/f5mqxrz7" target="_blank">✨ Assembly Launch Party</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Sat, Aug 8 · 4:30 PM · Fuser, 1811 Blake Ave, Los Angeles, CA 90039, USA · 20.1 km away <span class="cat">tech</span></div>
@@ -2654,7 +2648,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event standout" style="border-left-color: var(--standout-border); border-left-width: 6px; box-shadow: 0 0 0 3px var(--standout-glow);">
+    <div class="event standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/claude-k58w" target="_blank">✨ Orange County | Claude Code For Beginners</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Sat, Aug 1 · 1:00 PM · The Ticket 500, 2807 Villa Way, Newport Beach, CA 92663, USA · 62.3 km away <span class="cat">ai</span></div>

@@ -12,15 +12,12 @@
     --line: #dddddd;
     --link: #0645ad;
     --cat-bg: #f0f0f0;
-    --hl-near-bg: #dfeee0;
-    --hl-near-border: #7aab7c;
-    --hl-mid-bg: #eceff1;
-    --hl-mid-border: #9aa0a6;
-    --hl-near-link: #3f7a45;
-    --hl-mid-link: #52585e;
-    --standout-border: #c99a3f;
-    --standout-glow: rgba(201, 154, 63, 0.35);
-    --standout-badge-bg: #f5e6c8;
+    --hl-near-bg: #eef6ee;
+    --hl-near-border: #a9c9aa;
+    --hl-mid-bg: #f2f3f4;
+    --hl-mid-border: #b7bcc0;
+    --standout-border: #c9ab6b;
+    --standout-badge-bg: #f5ecd9;
     --standout-badge-ink: #7a5b1e;
   }
   @media (prefers-color-scheme: dark) {
@@ -31,31 +28,26 @@
       --line: #2c3336;
       --link: #7fb0ff;
       --cat-bg: #232a2d;
-      --hl-near-bg: #1c2b1c;
-      --hl-near-border: #4d7a4f;
-      --hl-mid-bg: #262b2e;
-      --hl-mid-border: #7a8288;
-      --hl-near-link: #8fd685;
-      --hl-mid-link: #c3c9ce;
-      --standout-border: #b3903f;
-      --standout-glow: rgba(179, 144, 63, 0.35);
-      --standout-badge-bg: #3a3220;
+      --hl-near-bg: #182019;
+      --hl-near-border: #3f5c40;
+      --hl-mid-bg: #202427;
+      --hl-mid-border: #565b5f;
+      --standout-border: #8a734a;
+      --standout-badge-bg: #332c1c;
       --standout-badge-ink: #e0c080;
     }
   }
   :root[data-theme="dark"] {
     --paper: #14181a; --ink: #e7e9ea; --ink-soft: #9aa3a8; --line: #2c3336;
-    --link: #7fb0ff; --cat-bg: #232a2d; --hl-near-bg: #1c2b1c; --hl-near-border: #4d7a4f;
-    --hl-mid-bg: #262b2e; --hl-mid-border: #7a8288; --hl-near-link: #8fd685; --hl-mid-link: #c3c9ce;
-    --standout-border: #b3903f; --standout-glow: rgba(179, 144, 63, 0.35);
-    --standout-badge-bg: #3a3220; --standout-badge-ink: #e0c080;
+    --link: #7fb0ff; --cat-bg: #232a2d; --hl-near-bg: #182019; --hl-near-border: #3f5c40;
+    --hl-mid-bg: #202427; --hl-mid-border: #565b5f;
+    --standout-border: #8a734a; --standout-badge-bg: #332c1c; --standout-badge-ink: #e0c080;
   }
   :root[data-theme="light"] {
     --paper: #ffffff; --ink: #1a1a1a; --ink-soft: #666666; --line: #dddddd;
-    --link: #0645ad; --cat-bg: #f0f0f0; --hl-near-bg: #dfeee0; --hl-near-border: #7aab7c;
-    --hl-mid-bg: #eceff1; --hl-mid-border: #9aa0a6; --hl-near-link: #3f7a45; --hl-mid-link: #52585e;
-    --standout-border: #c99a3f; --standout-glow: rgba(201, 154, 63, 0.35);
-    --standout-badge-bg: #f5e6c8; --standout-badge-ink: #7a5b1e;
+    --link: #0645ad; --cat-bg: #f0f0f0; --hl-near-bg: #eef6ee; --hl-near-border: #a9c9aa;
+    --hl-mid-bg: #f2f3f4; --hl-mid-border: #b7bcc0;
+    --standout-border: #c9ab6b; --standout-badge-bg: #f5ecd9; --standout-badge-ink: #7a5b1e;
   }
   body { font-family: -apple-system, sans-serif; max-width: 1500px; margin: 40px auto; padding: 0 16px; color: var(--ink); background: var(--paper); }
   h1 { font-size: 1.4rem; }
@@ -72,9 +64,7 @@
   .desc { color: var(--ink); opacity: 0.85; font-size: 0.75rem; margin-top: 4px; }
   .cat { display: inline-block; background: var(--cat-bg); border-radius: 4px; padding: 1px 5px; font-size: 0.7rem; margin-right: 3px; }
   .hl-near { background: var(--hl-near-bg); }
-  .hl-near a { color: var(--hl-near-link); }
   .hl-mid { background: var(--hl-mid-bg); }
-  .hl-mid a { color: var(--hl-mid-link); }
   .event.far { padding: 4px 8px; }
   .event.far a { font-weight: 400; font-size: 0.8rem; color: var(--ink-soft); }
   .event.far .meta { font-size: 0.68rem; }
@@ -100,8 +90,8 @@
   <div class="legend">
     <div class="legend-label">Distance</div>
     <div class="legend-items">
-      <div><span style="background: #dfeee0; border: 1px solid #7aab7c;"></span>Within 8 km</div>
-      <div><span style="background: #eceff1; border: 1px solid #9aa0a6;"></span>Within 20 km</div>
+      <div><span style="background: #eef6ee; border: 1px solid #a9c9aa;"></span>Within 8 km</div>
+      <div><span style="background: #f2f3f4; border: 1px solid #b7bcc0;"></span>Within 20 km</div>
       <div><span style="background: none; border: 1px solid var(--line);"></span>Farther (quieter card)</div>
     </div>
   </div>
@@ -143,7 +133,7 @@
       <div class="desc">Your startup is not “crushing it.” We know.</div>
     </div>
     
-    <div class="event far standout" style="border-color: var(--standout-border); border-width: 2px; box-shadow: 0 0 0 3px var(--standout-glow);">
+    <div class="event far standout" style="border-color: var(--standout-border); border-width: 2px;">
       <a href="https://lu.ma/ticket500-q3gm" target="_blank">✨ 🎤 Startup Standup: Founders Therapy</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">6:00–8:00 PM · 2807 Villa Way, Newport Beach, CA 92663, USA · 62.3 km <span class="cat">tech</span></div>
@@ -171,7 +161,7 @@
       <div class="desc">**these tickets are for the second set of jazz night** come hang out !</div>
     </div>
     </div></div><div class="day-col" style="flex: 1 0 190px; min-width: 190px;"><div class="day-header">Tue, Aug 4 <span class="count">(3)</span></div><div class="event-list" style="">
-    <div class="event hl-mid standout" style="border-color: var(--standout-border); border-width: 2px; box-shadow: 0 0 0 3px var(--standout-glow);">
+    <div class="event hl-mid standout" style="border-color: var(--standout-border); border-width: 2px;">
       <a href="https://lu.ma/later-lfdy" target="_blank">✨ Made You Look Tour: The LA Edit</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">10:30–1:30 PM · Fashion District, Los Angeles, CA · 18.2 km <span class="cat">ai</span></div>
@@ -213,14 +203,14 @@
       <div class="desc">Korea Creative Content Agency (KOCCA ) in partnership with Plug and Play , is bringing a curated cohort of innovative Korean startups to Los Angeles from 5–7 August .</div>
     </div>
     
-    <div class="event hl-near standout" style="border-color: var(--standout-border); border-width: 2px; box-shadow: 0 0 0 3px var(--standout-glow);">
+    <div class="event hl-near standout" style="border-color: var(--standout-border); border-width: 2px;">
       <a href="https://lu.ma/hbx8dqlh" target="_blank">✨ Product.ai Golden Hour 006</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">5:00–8:00 PM · Product.ai, 12100 Wilshire Blvd #950, Los Angeles, CA 90025, USA · 6.8 km <span class="cat">tech</span></div>
       <div class="desc">Join us for the sixth Product.ai Golden Hour — an evening of tastings, discovery, and new things worth trying, at our West LA headquarters.</div>
     </div>
     
-    <div class="event far standout" style="border-color: var(--standout-border); border-width: 2px; box-shadow: 0 0 0 3px var(--standout-glow);">
+    <div class="event far standout" style="border-color: var(--standout-border); border-width: 2px;">
       <a href="https://lu.ma/0c508dlp" target="_blank">✨ Character Pilot Pitch Contest (w/ cash prize)</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">5:00–9:00 PM · Northeast Los Angeles, Los Angeles, CA · 20.9 km <span class="cat">ai</span></div>
@@ -248,7 +238,7 @@
       <div class="desc">The Messy Muses soft launch is centered around Yesteryear by Cairo Claire Burke, a fictional novel about a &quot;tradwife&quot; social media influencer who wakes up one day trapped in the literal, brutal pioneer reality of 1855.</div>
     </div>
     
-    <div class="event hl-mid standout" style="border-color: var(--standout-border); border-width: 2px; box-shadow: 0 0 0 3px var(--standout-glow);">
+    <div class="event hl-mid standout" style="border-color: var(--standout-border); border-width: 2px;">
       <a href="https://lu.ma/zb8d5chy" target="_blank">✨ AI Filmmaking Meetup - Los Angeles (Curious Refuge Community Meetup)</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">6:30–8:30 PM · All Season Brewing Company, 800 S La Brea Ave, Los Angeles, CA 90036, USA · 10.2 km <span class="cat">ai</span></div>
@@ -304,7 +294,7 @@
       <div class="desc">AI Readiness for Businesses: From Opportunity to Implementation Hosted by the Long Beach Accelerator In this session, map out the people, processes, and next steps needed to implement AI responsibly and sustainably within your business.</div>
     </div>
     
-    <div class="event hl-mid standout" style="border-color: var(--standout-border); border-width: 2px; box-shadow: 0 0 0 3px var(--standout-glow);">
+    <div class="event hl-mid standout" style="border-color: var(--standout-border); border-width: 2px;">
       <a href="https://lu.ma/6r50ux2o" target="_blank">✨ Tooling Engineering Happy Hour</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">5:00–8:30 PM · Los Angeles Ale Works - Brewery &amp; Tasting Room, 12918 Cerise Ave, Hawthorne, CA 90250, USA · 12.2 km <span class="cat">tech</span></div>
@@ -465,7 +455,7 @@
       <div class="desc">All Gas No Brakes is a high-energy day party where music, cars, and community collide.</div>
     </div>
     
-    <div class="event far standout" style="border-color: var(--standout-border); border-width: 2px; box-shadow: 0 0 0 3px var(--standout-glow);">
+    <div class="event far standout" style="border-color: var(--standout-border); border-width: 2px;">
       <a href="https://lu.ma/f5mqxrz7" target="_blank">✨ Assembly Launch Party</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">4:30–7:00 PM · Fuser, 1811 Blake Ave, Los Angeles, CA 90039, USA · 20.1 km <span class="cat">tech</span></div>
