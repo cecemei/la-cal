@@ -82,12 +82,14 @@
   .legend-items .chip.active { background: var(--cat-bg); color: var(--ink); font-weight: 600; }
   .event.hidden-by-filter { display: none; }
   .scroll-hint { font-size: 0.75rem; color: var(--ink-soft); margin-bottom: 12px; }
-  .week-grid, .top-scroll { scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
-  .week-grid { padding-bottom: 8px; }
-  .week-grid::-webkit-scrollbar, .top-scroll::-webkit-scrollbar { height: 8px; }
-  .week-grid::-webkit-scrollbar-track, .top-scroll::-webkit-scrollbar-track { background: transparent; }
-  .week-grid::-webkit-scrollbar-thumb, .top-scroll::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
-  .top-scroll { overflow-x: auto; overflow-y: hidden; height: 14px; margin-bottom: 6px; }
+  .week-grid { scrollbar-width: thin; scrollbar-color: var(--line) transparent; padding-bottom: 8px; }
+  .week-grid::-webkit-scrollbar { height: 8px; }
+  .week-grid::-webkit-scrollbar-track { background: transparent; }
+  .week-grid::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+  .top-scroll { overflow-x: auto; overflow-y: hidden; height: 10px; margin-bottom: 10px; border-radius: 999px; background: var(--cat-bg); scrollbar-width: thin; scrollbar-color: var(--link) transparent; }
+  .top-scroll::-webkit-scrollbar { height: 10px; }
+  .top-scroll::-webkit-scrollbar-track { background: transparent; border-radius: 999px; }
+  .top-scroll::-webkit-scrollbar-thumb { background: var(--link); border-radius: 999px; border: 2px solid var(--cat-bg); }
   .top-scroll-inner { height: 1px; }
 </style>
 </head>
