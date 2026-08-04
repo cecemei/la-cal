@@ -54,8 +54,9 @@
   body.hide-band-morning .event[data-band="morning"] { display: none; }
   body.hide-band-afternoon .event[data-band="afternoon"] { display: none; }
   body.hide-band-evening .event[data-band="evening"] { display: none; }
-  body.hide-band-late-night .event[data-band="late-night"] { display: none; }
+  body.hide-band-night .event[data-band="night"] { display: none; }
   body.hide-standout .event.standout { display: none; }
+  body.hide-non-standout .event:not(.standout) { display: none; }
 </style>
 </head>
 <body>
@@ -75,13 +76,14 @@
       <div class="chip" data-filter="band-morning"><span style="background: #6f95b3;"></span>Morning</div>
       <div class="chip" data-filter="band-afternoon"><span style="background: #c49a55;"></span>Afternoon</div>
       <div class="chip" data-filter="band-evening"><span style="background: #8f6f9e;"></span>Evening</div>
-      <div class="chip" data-filter="band-late-night"><span style="background: #4c5b6b;"></span>Late night</div>
+      <div class="chip" data-filter="band-night"><span style="background: #4c5b6b;"></span>Night</div>
     </div>
   </div>
   <div class="legend">
     <div class="legend-label">Standout — click to hide</div>
     <div class="legend-items">
       <div class="chip" data-filter="standout"><span style="background: var(--standout-badge-bg); border: 1px solid var(--standout-border);"></span>Featured or 200+ going</div>
+      <div class="chip" data-filter="non-standout"><span style="background: none; border: 1px solid var(--line);"></span>Everything else</div>
     </div>
   </div>
 </div>
@@ -333,7 +335,7 @@
     </div>
     
 
-    <div class="event hl-mid" data-band="late-night" style="border-left-color: #4c5b6b;">
+    <div class="event hl-mid" data-band="night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/dHL7kxJ04WUlf84vwTce" target="_blank">🎉 Pulse Theory Music</a>
       
       <div class="meta">Sat, Aug 15 · 9:30 PM · 831 Venice Blvd, Los Angeles, CA 90015 · 14.9 km away <span class="cat">partiful</span></div>
@@ -474,7 +476,7 @@
     </div>
     
 
-    <div class="event hl-near" data-band="late-night" style="border-left-color: #4c5b6b;">
+    <div class="event hl-near" data-band="night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/VGJGbIStRJOGvACOHK1n" target="_blank">🎉 1212 After Hours</a>
       
       <div class="meta">Sat, Aug 29 · 10:00 PM · 1212 Third St Promenade, Santa Monica, CA 90401 · 7.7 km away <span class="cat">partiful</span></div>
@@ -482,7 +484,7 @@
     </div>
     
 
-    <div class="event hl-mid" data-band="late-night" style="border-left-color: #4c5b6b;">
+    <div class="event hl-mid" data-band="night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/rHJMbdczwbgUb4dWxEXB" target="_blank">🎉 Savage Ga$p x There Will Be Signs presents: American Gothic Release Party</a>
       
       <div class="meta">Fri, Jul 31 · 9:00 PM · 4574 Beverly Blvd, Los Angeles, CA 90004 · 14.0 km away <span class="cat">partiful</span></div>
@@ -530,7 +532,7 @@
     </div>
     
 
-    <div class="event " data-band="late-night" style="border-left-color: #4c5b6b;">
+    <div class="event " data-band="night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/hv1ADFIlgGY4N4hUGF5R" target="_blank">🎉 ☆ GROOVE BOUNCE DUBSTEP NIGHT ☆</a>
       
       <div class="meta">Sat, Aug 15 · 9:00 PM · 6417 Whittier Blvd, Los Angeles, CA 90022 · 27.1 km away <span class="cat">partiful</span></div>
@@ -841,7 +843,7 @@
     </div>
     
 
-    <div class="event hl-mid" data-band="late-night" style="border-left-color: #4c5b6b;">
+    <div class="event hl-mid" data-band="night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/qrhyLoWpiQgvUrAhtUxr" target="_blank">🎉 CASA PERREO at Somewhere Special</a>
       
       <div class="meta">Sat, Aug 15 · 9:00 PM · 929 S Broadway, Los Angeles, CA 90015 · 15.8 km away <span class="cat">partiful</span></div>
@@ -921,7 +923,7 @@
     </div>
     
 
-    <div class="event " data-band="late-night" style="border-left-color: #4c5b6b;">
+    <div class="event " data-band="night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/V8xIdTOqfVa7LXbuNjCo" target="_blank">🎉 Boiler Tearoom: Tea Rave</a>
       
       <div class="meta">Sat, Aug 1 · 10:00 PM · 1598 Oak Street, Los Angeles, CA 90015 <span class="cat">partiful</span></div>
@@ -1035,7 +1037,7 @@
     </div>
     
 
-    <div class="event hl-mid" data-band="late-night" style="border-left-color: #4c5b6b;">
+    <div class="event hl-mid" data-band="night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/HZnrzh2NOsav3NVvyz29" target="_blank">🎉 life of the party</a>
       
       <div class="meta">Fri, Jul 31 · 10:00 PM · 5574 Melrose Ave, Los Angeles, CA 90038 · 13.4 km away <span class="cat">partiful</span></div>
@@ -1043,7 +1045,7 @@
     </div>
     
 
-    <div class="event hl-mid" data-band="late-night" style="border-left-color: #4c5b6b;">
+    <div class="event hl-mid" data-band="night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/6z0orZNASqWSVbYyhtGY" target="_blank">🎉 Big House Presents AMERICAN SPIRIT</a>
       
       <div class="meta">Fri, Jul 31 · 10:00 PM · 1625 S Los Angeles St, Los Angeles, CA 90015 · 15.5 km away <span class="cat">partiful</span></div>
@@ -1075,7 +1077,7 @@
     </div>
     
 
-    <div class="event hl-mid" data-band="late-night" style="border-left-color: #4c5b6b;">
+    <div class="event hl-mid" data-band="night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/N94jxfE5zIFUjckMRWao" target="_blank">🎉 DJ Josh Da Costa &amp; DJ Amanda Siegel</a>
       
       <div class="meta">Fri, Jul 31 · 9:00 PM · 2906 W Sunset Blvd, Los Angeles, CA 90026 · 16.9 km away <span class="cat">partiful</span></div>
@@ -1506,7 +1508,7 @@
     </div>
     
 
-    <div class="event hl-mid" data-band="late-night" style="border-left-color: #4c5b6b;">
+    <div class="event hl-mid" data-band="night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/4P4F2kYQbXvMNwwWlEzd" target="_blank">🎉 Sommer Break</a>
       
       <div class="meta">Thu, Jul 30 · 10:00 PM · 1541 Wilcox Ave, Los Angeles, CA 90028 · 14.5 km away <span class="cat">partiful</span></div>
@@ -1604,7 +1606,7 @@
     </div>
     
 
-    <div class="event hl-near" data-band="late-night" style="border-left-color: #4c5b6b;">
+    <div class="event hl-near" data-band="night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/fNre7xjOK0xj5aqqEh8W" target="_blank">🎉 JSTAGIRLSNIGHT 8/1</a>
       
       <div class="meta">Sat, Aug 1 · 10:00 PM · 52 Windward Ave, Venice, CA 90291 · 4.4 km away <span class="cat">partiful</span></div>
@@ -1646,7 +1648,7 @@ Inanimate Stories: Street Still Life</a>
     </div>
     
 
-    <div class="event hl-mid" data-band="late-night" style="border-left-color: #4c5b6b;">
+    <div class="event hl-mid" data-band="night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/IrXO3Iis5J55bgV4E2if" target="_blank">🎉 club $$$ @ 
 On the Rox</a>
       
@@ -1703,7 +1705,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" data-band="late-night" style="border-left-color: #4c5b6b;">
+    <div class="event hl-mid" data-band="night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/AwUeSi8XaSVrQt1qc7yt" target="_blank">🎉 ArtHouse Vol. 11</a>
       
       <div class="meta">Sat, Aug 29 · 9:00 PM · 1625 S Los Angeles St, Los Angeles, CA 90015 · 15.5 km away <span class="cat">partiful</span></div>
@@ -1711,7 +1713,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" data-band="late-night" style="border-left-color: #4c5b6b;">
+    <div class="event hl-mid" data-band="night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/4Zxd8lzpsFGpT9pH8WzG" target="_blank">🎉 PERREO CON CARDO at Somewhere Special</a>
       
       <div class="meta">Sat, Aug 8 · 9:00 PM · 929 S Broadway, Los Angeles, CA 90015 · 15.8 km away <span class="cat">partiful</span></div>
@@ -1839,7 +1841,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event " data-band="late-night" style="border-left-color: #4c5b6b;">
+    <div class="event " data-band="night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/UcSzymmD1w5qW1NsblMw" target="_blank">🎉 Recession Indicator</a>
       
       <div class="meta">Fri, Jul 31 · 9:00 PM · 891 Baker St, Unit A10, Costa Mesa, CA 92626 · 60.4 km away <span class="cat">partiful</span></div>
