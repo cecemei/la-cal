@@ -6,31 +6,31 @@
 <style>
   :root {
     --paper: #ffffff; --ink: #1a1a1a; --ink-soft: #666666; --line: #dddddd; --link: #3a5a82;
-    --cat-bg: #f0f0f0; --hl-near-bg: #eef6ee; --hl-near-border: #a9c9aa; --hl-mid-bg: #f2f3f4;
-    --hl-mid-border: #b7bcc0;
+    --cat-bg: #f0f0f0; --hl-near-bg: #dbe9f6; --hl-near-border: #7fa8cc; --hl-mid-bg: #eef4fa;
+    --hl-mid-border: #b9cfe3;
     --standout-border: #c9ab6b; --standout-badge-bg: #f5ecd9; --standout-badge-ink: #7a5b1e;
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --paper: #14181a; --ink: #e7e9ea; --ink-soft: #9aa3a8; --line: #2c3336; --link: #9fb9d9;
-      --cat-bg: #232a2d; --hl-near-bg: #182019; --hl-near-border: #3f5c40; --hl-mid-bg: #202427;
-      --hl-mid-border: #565b5f;
+      --cat-bg: #232a2d; --hl-near-bg: #15222e; --hl-near-border: #3a5f82; --hl-mid-bg: #1a2126;
+      --hl-mid-border: #3f4c58;
       --standout-border: #8a734a; --standout-badge-bg: #332c1c; --standout-badge-ink: #e0c080;
     }
   }
   :root[data-theme="dark"] {
     --paper: #14181a; --ink: #e7e9ea; --ink-soft: #9aa3a8; --line: #2c3336; --link: #9fb9d9;
-    --cat-bg: #232a2d; --hl-near-bg: #182019; --hl-near-border: #3f5c40; --hl-mid-bg: #202427;
-    --hl-mid-border: #565b5f;
+    --cat-bg: #232a2d; --hl-near-bg: #15222e; --hl-near-border: #3a5f82; --hl-mid-bg: #1a2126;
+    --hl-mid-border: #3f4c58;
     --standout-border: #8a734a; --standout-badge-bg: #332c1c; --standout-badge-ink: #e0c080;
   }
   :root[data-theme="light"] {
     --paper: #ffffff; --ink: #1a1a1a; --ink-soft: #666666; --line: #dddddd; --link: #3a5a82;
-    --cat-bg: #f0f0f0; --hl-near-bg: #eef6ee; --hl-near-border: #a9c9aa; --hl-mid-bg: #f2f3f4;
-    --hl-mid-border: #b7bcc0;
+    --cat-bg: #f0f0f0; --hl-near-bg: #dbe9f6; --hl-near-border: #7fa8cc; --hl-mid-bg: #eef4fa;
+    --hl-mid-border: #b9cfe3;
     --standout-border: #c9ab6b; --standout-badge-bg: #f5ecd9; --standout-badge-ink: #7a5b1e;
   }
-  body { font-family: -apple-system, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 16px; color: var(--ink); background: var(--paper); }
+  body { font-family: ui-rounded, 'Avenir Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 16px; color: var(--ink); background: var(--paper); }
   h1 { font-size: 1.4rem; }
   h2 { font-size: 1rem; color: var(--ink-soft); margin-top: 2.5rem; border-bottom: 1px solid var(--line); padding-bottom: 4px; }
   .event { padding: 8px 10px; border-radius: 6px; margin: 6px 0; border: 1px solid transparent; border-left: 4px solid #ccc; }
@@ -48,6 +48,14 @@
   .legend-items { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size: 0.8rem; color: var(--ink-soft); }
   .legend-items div { display: flex; align-items: center; white-space: nowrap; }
   .legend-items span { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; flex-shrink: 0; }
+  .legend-items .chip { cursor: pointer; user-select: none; padding: 2px 6px; border-radius: 4px; }
+  .legend-items .chip:hover { background: var(--cat-bg); }
+  .legend-items .chip.off { opacity: 0.4; text-decoration: line-through; }
+  body.hide-band-morning .event[data-band="morning"] { display: none; }
+  body.hide-band-afternoon .event[data-band="afternoon"] { display: none; }
+  body.hide-band-evening .event[data-band="evening"] { display: none; }
+  body.hide-band-late-night .event[data-band="late-night"] { display: none; }
+  body.hide-standout .event.standout { display: none; }
 </style>
 </head>
 <body>
@@ -56,29 +64,30 @@
   <div class="legend">
     <div class="legend-label">Distance</div>
     <div class="legend-items">
-      <div><span style="background: #eef6ee; border: 1px solid #a9c9aa;"></span>Within 8 km</div>
-      <div><span style="background: #f2f3f4; border: 1px solid #b7bcc0;"></span>Within 20 km</div>
+      <div><span style="background: #dbe9f6; border: 1px solid #7fa8cc;"></span>Within 8 km</div>
+      <div><span style="background: #eef4fa; border: 1px solid #b9cfe3;"></span>Within 20 km</div>
       <div><span style="background: none; border: 1px solid var(--line);"></span>Farther</div>
     </div>
   </div>
   <div class="legend">
-    <div class="legend-label">Time of day (left edge)</div>
+    <div class="legend-label">Time of day (left edge) — click to hide</div>
     <div class="legend-items">
-      <div><span style="background: #6f95b3;"></span>Morning</div>
-      <div><span style="background: #c49a55;"></span>Afternoon</div>
-      <div><span style="background: #8f6f9e;"></span>Evening</div>
+      <div class="chip" data-filter="band-morning"><span style="background: #6f95b3;"></span>Morning</div>
+      <div class="chip" data-filter="band-afternoon"><span style="background: #c49a55;"></span>Afternoon</div>
+      <div class="chip" data-filter="band-evening"><span style="background: #8f6f9e;"></span>Evening</div>
+      <div class="chip" data-filter="band-late-night"><span style="background: #4c5b6b;"></span>Late night</div>
     </div>
   </div>
   <div class="legend">
-    <div class="legend-label">Standout</div>
+    <div class="legend-label">Standout — click to hide</div>
     <div class="legend-items">
-      <div><span style="background: var(--standout-badge-bg); border: 1px solid var(--standout-border);"></span>Featured or 200+ going</div>
+      <div class="chip" data-filter="standout"><span style="background: var(--standout-badge-bg); border: 1px solid var(--standout-border);"></span>Featured or 200+ going</div>
     </div>
   </div>
 </div>
 <h2>New on Mon, Aug 3 at 5:01 PM (2 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/j08wOkL6WYwATaYRp6ea" target="_blank">🎉 pilates in the park</a>
       
       <div class="meta">Sat, Aug 8 · 12:00 PM · 6200 Franklin Ave, Los Angeles, CA 90028 · 15.0 km away <span class="cat">partiful</span></div>
@@ -86,7 +95,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/Fi2V04R7QLE4yplktr0Q" target="_blank">🎉 Los Feliz Writers Fest 2026 : Fall in Love With Your Own Voice</a>
       
       <div class="meta">Sat, Aug 22 · 10:00 AM · Los Feliz, Los Angeles, CA <span class="cat">partiful</span></div>
@@ -95,7 +104,7 @@
     
 <h2>New on Mon, Aug 3 at 5:00 PM (4 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #c49a55;">
+    <div class="event hl-near" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/FoundersLabAug12" target="_blank">✨ Founder&#x27;s Lab: August Goalsetting Circle</a>
       
       <div class="meta">Wed, Aug 12 · 12:00 PM · The KINN, 150 Horizon Ave, Venice, CA 90291, USA · 4.6 km away <span class="cat">tech</span></div>
@@ -103,7 +112,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/talentcommercesummit" target="_blank">✨ Shopify Presents 2026 Talent Commerce Summit</a>
       
       <div class="meta">Wed, Sep 16 · 9:00 AM · Central LA, West Hollywood, CA · 11.8 km away <span class="cat">tech</span></div>
@@ -111,7 +120,7 @@
     </div>
     
 
-    <div class="event hl-mid standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
+    <div class="event hl-mid standout" data-band="morning" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/later-lfdy" target="_blank">✨ Made You Look Tour: The LA Edit</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Tue, Aug 4 · 10:30 AM · Fashion District, Los Angeles, CA · 18.2 km away <span class="cat">ai</span></div>
@@ -119,7 +128,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/orange-county" target="_blank">✨ Executive Dinner: Leveraging AI Agents</a>
       
       <div class="meta">Mon, Aug 24 · 7:00 PM · South Coast Metro, Costa Mesa, CA · 60.2 km away <span class="cat">ai</span></div>
@@ -128,7 +137,7 @@
     
 <h2>New on Mon, Aug 3 at 11:00 AM (1 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/edz20j6r" target="_blank">✨ An Intimate Dinner with LA Accountants and Bookkeepers</a>
       
       <div class="meta">Tue, Aug 11 · 6:30 PM · Osteria La Buca - Sherman Oaks, 14235 Ventura Blvd, Sherman Oaks, CA 91423, USA · 17.4 km away <span class="cat">ai</span></div>
@@ -137,7 +146,7 @@
     
 <h2>New on Mon, Aug 3 at 7:01 AM (1 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/ZRYyJ2c3cJeCKeHIk7ik" target="_blank">🎉 STAR GAZE @ GRIFFITH</a>
       
       <div class="meta">Fri, Aug 7 · 8:00 PM · 2800 East Observatory Road, Los Angeles, CA 90027 · 17.9 km away <span class="cat">partiful</span></div>
@@ -146,7 +155,7 @@
     
 <h2>New on Mon, Aug 3 at 7:00 AM (1 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/cds5vrq9" target="_blank">✨ ThursdayNights Summer Celebration August 6th in Marina del Rey</a>
       
       <div class="meta">Thu, Aug 6 · 5:30 PM · 4360 Via Marina, Marina Del Rey, CA 90292, USA · 3.9 km away <span class="cat">food</span><span class="cat">tech</span></div>
@@ -155,7 +164,7 @@
     
 <h2>New on Sun, Aug 2 at 11:01 PM (2 events)</h2>
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/OSlMms30Z7atSQQhGAVq" target="_blank">🎉 1042 Flea x Santa Anita Race Track Market</a>
       
       <div class="meta">Sat, Aug 29 · 11:00 AM · 285 W Huntington Dr, Arcadia, CA 91007 · 37.9 km away <span class="cat">partiful</span></div>
@@ -163,7 +172,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/iKe3wnVAVfYntVlx1YbW" target="_blank">🎉 Hike &amp; Hang:                    Mount Hollywood</a>
       
       <div class="meta">Sun, Aug 23 · 8:00 AM · Los Angeles, CA 90027 <span class="cat">partiful</span></div>
@@ -172,7 +181,7 @@
     
 <h2>New on Sun, Aug 2 at 5:00 PM (4 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/DinnerTableChelsea" target="_blank">✨ The Dinner Table at Chelsea (Santa Monica)</a>
       
       <div class="meta">Thu, Aug 20 · 7:00 PM · Chelsea Restaurant, 2460 Wilshire Blvd, Santa Monica, CA 90403, USA · 6.8 km away <span class="cat">food</span></div>
@@ -180,7 +189,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/ezwkhcqm" target="_blank">✨ ASIS GLA Chapter: Redondo Beach PD K-9 Demonstration &amp; Networking Lunch</a>
       
       <div class="meta">Wed, Aug 19 · 12:30 PM · South Redondo, Redondo Beach, CA · 16.8 km away <span class="cat">tech</span></div>
@@ -188,7 +197,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/swirl" target="_blank">✨ SWIRL: An Immersive AI/ XR Art Experience - w/ special guests King Willonious, Zelia ZZ Tan, Plexusplay and more!</a>
       
       <div class="meta">Sun, Aug 23 · 2:00 PM · Creative Technology Center, 604 Moulton Ave, Los Angeles, CA 90031, USA · 20.4 km away <span class="cat">ai</span></div>
@@ -196,7 +205,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/svzbrxy1" target="_blank">✨ Closing Reception hosted by Volund MFG</a>
       
       <div class="meta">Thu, Sep 17 · 6:00 PM · Sunset Beach, Huntington Beach, CA · 44.1 km away <span class="cat">tech</span></div>
@@ -205,7 +214,7 @@
     
 <h2>New on Sun, Aug 2 at 11:00 AM (1 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/t96kt8ak" target="_blank">✨ Future-Proof Your Career: Resilience in an Age of Technological Disruption</a>
       
       <div class="meta">Sun, Sep 20 · 5:00 PM · Sydenham Clinic, 360 N Bedford Dr, Beverly Hills, CA 90210, USA · 8.2 km away <span class="cat">ai</span></div>
@@ -214,7 +223,7 @@
     
 <h2>New on Sat, Aug 1 at 11:01 PM (3 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/rEQ88yTROdCo5HNRUYMo" target="_blank">🎉 Read it &amp; Weave | w Messy Muse Book Club</a>
       
       <div class="meta">Wed, Aug 5 · 6:30 PM · 1859 W Adams Blvd, Los Angeles, CA 90018 · 12.0 km away <span class="cat">partiful</span></div>
@@ -222,7 +231,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/WnMrwKGBiwi2JTCeZxZM" target="_blank">🎉 Thrift &amp; Upcycling  Workshop</a>
       
       <div class="meta">Fri, Aug 14 · 12:00 PM · 2701 N Broadway, Los Angeles, CA 90031 · 21.3 km away <span class="cat">partiful</span></div>
@@ -230,7 +239,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/E43YUYlvNJ11sHLzBJMs" target="_blank">🎉 BGW 1 Year Anniversary</a>
       
       <div class="meta">Sat, Aug 22 · 1:00 PM · Long Beach, CA <span class="cat">partiful</span></div>
@@ -239,7 +248,7 @@
     
 <h2>New on Sat, Aug 1 at 5:01 PM (2 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/zkt9Lnjq3xkQiHIXsTcp" target="_blank">🎉 Every Sunday Funday Market at A Good Used Book</a>
       
       <div class="meta">Sun, Aug 2 · 12:00 PM · 307 Glendale Blvd, Los Angeles, CA 90026 · 17.1 km away <span class="cat">partiful</span></div>
@@ -247,7 +256,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/y7Lj7UzuCJRvgdkaSQ9Z" target="_blank">🎉 Kapatid Kickback Clothing Swap</a>
       
       <div class="meta">Sat, Aug 22 · 11:00 AM · 23437 Western Ave, Torrance, CA 90501 · 23.1 km away <span class="cat">partiful</span></div>
@@ -256,7 +265,7 @@
     
 <h2>New on Sat, Aug 1 at 11:01 AM (1 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/kp5o1znOjsah41pMciMB" target="_blank">🎉 Von Dutch Market @ HARD Summer</a>
       
       <div class="meta">Sat, Aug 1 · 2:00 PM · 1231 District Dr, Inglewood, CA 90303 · 9.1 km away <span class="cat">partiful</span></div>
@@ -265,7 +274,7 @@
     
 <h2>New on Sat, Aug 1 at 11:00 AM (2 events)</h2>
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/d01z8hxv" target="_blank">✨ Free Dr. Zero Zero Non-Alcoholic Amaro &amp; Aperitivo Tasting</a>
       
       <div class="meta">Sat, Aug 1 · 1:00 PM · Burden of Proof, 1012 Mission St, South Pasadena, CA 91030, USA · 28.0 km away <span class="cat">food</span></div>
@@ -273,7 +282,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/9map8za2" target="_blank">✨ AI Summit Social Hosted by OC CUE</a>
       
       <div class="meta">Mon, Aug 3 · 4:00 PM · Green Cheek Beer Co., 2957 Randolph Av Unit B, Costa Mesa, CA 92626, USA · 60.6 km away <span class="cat">ai</span></div>
@@ -282,7 +291,7 @@
     
 <h2>New on Sat, Aug 1 at 7:01 AM (2 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/2IMK11KZp1AtyYHo6APk" target="_blank">🎉 Dog Days of Summer Adoption Event with Chevy Culver City</a>
       
       <div class="meta">Sat, Aug 8 · 10:00 AM · 6101 W Slauson Ave, Culver City, CA 90230 · 3.1 km away <span class="cat">partiful</span></div>
@@ -290,7 +299,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/UVKOy8YeQ4alhjZfsrKp" target="_blank">🎉 Caffenol Social</a>
       
       <div class="meta">Fri, Aug 21 · 4:30 PM · 55 N Baldwin Ave, Sierra Madre, CA 91024 · 38.9 km away <span class="cat">partiful</span></div>
@@ -299,7 +308,7 @@
     
 <h2>New on Sat, Aug 1 at 7:00 AM (1 events)</h2>
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/bwxqwq53" target="_blank">✨ AI Clinic for OC Business Owners &amp; Operators</a>
       
       <div class="meta">Fri, Aug 21 · 6:00 PM · 2807 Villa Way, Newport Beach, CA 92663, USA · 62.3 km away <span class="cat">ai</span></div>
@@ -308,7 +317,7 @@
     
 <h2>New on Fri, Jul 31 at 11:01 PM (4 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/OCHRRbxWxnb0JBgCabKo" target="_blank">🎉 Pour Decisions</a>
       
       <div class="meta">Wed, Aug 19 · 6:00 PM · 11050 Washington Blvd, Culver City, CA 90232 · 2.0 km away <span class="cat">partiful</span></div>
@@ -316,7 +325,7 @@
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/5ykDSEGkpDItcKc3Yx3U" target="_blank">🎉 Venice Photo Walk</a>
       
       <div class="meta">Sat, Aug 15 · 6:00 PM · 1800 Ocean Front Walk, Venice, CA 90291 · 5.3 km away <span class="cat">partiful</span></div>
@@ -324,7 +333,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #4c5b6b;">
+    <div class="event hl-mid" data-band="late-night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/dHL7kxJ04WUlf84vwTce" target="_blank">🎉 Pulse Theory Music</a>
       
       <div class="meta">Sat, Aug 15 · 9:30 PM · 831 Venice Blvd, Los Angeles, CA 90015 · 14.9 km away <span class="cat">partiful</span></div>
@@ -332,7 +341,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/8xPPjOmSnNWVMNrPXma9" target="_blank">🎉 jazz night w/ Joey Navarro: presented by micah&#x27;s market</a>
       
       <div class="meta">Mon, Aug 3 · 8:45 PM · 4628 Hollywood Blvd, Los Angeles, CA 90027 · 16.9 km away <span class="cat">partiful</span></div>
@@ -341,7 +350,7 @@
     
 <h2>New on Fri, Jul 31 at 11:00 PM (1 events)</h2>
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/ticket500-q3gm" target="_blank">✨ 🎤 Startup Standup: Founders Therapy</a>
       
       <div class="meta">Mon, Aug 3 · 6:00 PM · 2807 Villa Way, Newport Beach, CA 92663, USA · 62.3 km away <span class="cat">tech</span></div>
@@ -350,7 +359,7 @@
     
 <h2>New on Fri, Jul 31 at 5:00 PM (6 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #c49a55;">
+    <div class="event hl-near" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/pt0cht96" target="_blank">✨ Hawke Q4 &amp; Holiday Growth Summit at Google Playa Vista</a>
       
       <div class="meta">Fri, Aug 21 · 12:00 PM · Playa Vista, Los Angeles, CA · 2.5 km away <span class="cat">tech</span></div>
@@ -358,7 +367,7 @@
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #c49a55;">
+    <div class="event hl-near" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/lr8fg7gk" target="_blank">✨ Summer Picnic Potluck w/LA UXR Meetup</a>
       
       <div class="meta">Sat, Aug 15 · 12:00 PM · Ocean View Park, 2701 Barnard Wy, Santa Monica, CA 90405, USA · 5.6 km away <span class="cat">tech</span></div>
@@ -366,7 +375,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/3xwilxgz" target="_blank">✨ Physical AI Pitch Night @ Beckhoff</a>
       
       <div class="meta">Tue, Sep 15 · 5:30 PM · El Segundo, CA · 8.7 km away <span class="cat">ai</span></div>
@@ -374,7 +383,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/zb8d5chy" target="_blank">✨ AI Filmmaking Meetup - Los Angeles (Curious Refuge Community Meetup)</a>
       
       <div class="meta">Wed, Aug 5 · 6:30 PM · All Season Brewing Company, 800 S La Brea Ave, Los Angeles, CA 90036, USA · 10.2 km away <span class="cat">ai</span></div>
@@ -382,7 +391,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/6f5yt9e5" target="_blank">✨ Telling Your Story: A Workshop on Grant Writing for Urban Farms</a>
       
       <div class="meta">Wed, Sep 2 · 10:00 AM · MudTown Farms WLCAC, 2001 E 103rd St, Los Angeles, CA 90002, USA · 18.1 km away <span class="cat">food</span></div>
@@ -390,7 +399,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/3u78jos4" target="_blank">✨ Call to Arms for Power Builders - Special Meeting</a>
       
       <div class="meta">Wed, Aug 5 · 6:00 PM · EvoNexus Irvine, 101 Academy Wy #110, Irvine, CA 92617, USA · 65.2 km away <span class="cat">ai</span></div>
@@ -399,7 +408,7 @@
     
 <h2>New on Thu, Jul 30 at 11:01 PM (5 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/SIvjirvzSE3jf9emKBNW" target="_blank">🎉 Clothing Sale</a>
       
       <div class="meta">Sun, Aug 2 · 11:00 AM · 626 Broadway St, Venice, CA 90291 · 4.4 km away <span class="cat">partiful</span></div>
@@ -407,7 +416,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/iizBk7Ts3dzJiGMA10CP" target="_blank">🎉 LALUZAPALOOZA opening</a>
       
       <div class="meta">Fri, Aug 7 · 7:00 PM · 4633 Hollywood Blvd, Los Angeles, CA 90027 · 16.9 km away <span class="cat">partiful</span></div>
@@ -415,7 +424,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/tb7Cipskgz4aMV9tiLSa" target="_blank">🎉 ENCUERADO</a>
       
       <div class="meta">Wed, Aug 5 · 7:00 PM · 5240 Alhambra Ave, Los Angeles, CA 90032 · 24.7 km away <span class="cat">partiful</span></div>
@@ -423,7 +432,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/uCqDMRccaCexODMUS0oI" target="_blank">🎉 VINYL SHOP &amp; SOCIAL | Long Beach</a>
       
       <div class="meta">Sun, Aug 16 · 2:00 PM · 3630 Atlantic Ave, Long Beach, CA 90807 · 29.7 km away <span class="cat">partiful</span></div>
@@ -431,7 +440,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/9t67Poz64FkIGKQmOQTP" target="_blank">🎉 Yogurtwurld Pilot Launch Party!</a>
       
       <div class="meta">Sat, Aug 15 · 2:00 PM · 420 S First Ave, Arcadia, CA 91006 · 39.2 km away <span class="cat">partiful</span></div>
@@ -440,7 +449,7 @@
     
 <h2>New on Thu, Jul 30 at 11:00 PM (2 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/podecr84" target="_blank">✨ IGDA LA Monthly Mixer - August</a>
       
       <div class="meta">Wed, Aug 26 · 7:00 PM · Yard House, 13455 Maxella Ave, Marina Del Rey, CA 90292, USA · 2.0 km away <span class="cat">tech</span></div>
@@ -448,7 +457,7 @@
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #c49a55;">
+    <div class="event hl-near" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/vwl4ontw" target="_blank">✨ Fractionals and Founders Taco Tuesday</a>
       
       <div class="meta">Tue, Sep 15 · 3:00 PM · 33 Taps Culver City, 9739 Culver Blvd, Culver City, CA 90232, USA · 3.8 km away <span class="cat">tech</span></div>
@@ -457,7 +466,7 @@
     
 <h2>New on Thu, Jul 30 at 5:01 PM (11 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #c49a55;">
+    <div class="event hl-near" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/6Xuz2GVhMNCXBa8xHPPr" target="_blank">🎉 Mahjong Sesh @ The Wende Museum</a>
       
       <div class="meta">Sun, Aug 9 · 4:00 PM · 10858 Culver Blvd, Culver City, CA 90230 · 2.7 km away <span class="cat">partiful</span></div>
@@ -465,7 +474,7 @@
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #4c5b6b;">
+    <div class="event hl-near" data-band="late-night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/VGJGbIStRJOGvACOHK1n" target="_blank">🎉 1212 After Hours</a>
       
       <div class="meta">Sat, Aug 29 · 10:00 PM · 1212 Third St Promenade, Santa Monica, CA 90401 · 7.7 km away <span class="cat">partiful</span></div>
@@ -473,7 +482,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #4c5b6b;">
+    <div class="event hl-mid" data-band="late-night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/rHJMbdczwbgUb4dWxEXB" target="_blank">🎉 Savage Ga$p x There Will Be Signs presents: American Gothic Release Party</a>
       
       <div class="meta">Fri, Jul 31 · 9:00 PM · 4574 Beverly Blvd, Los Angeles, CA 90004 · 14.0 km away <span class="cat">partiful</span></div>
@@ -481,7 +490,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/IswtWbc16PYAJdilCKmY" target="_blank">🎉 Gallery Opening Night!</a>
       
       <div class="meta">Fri, Aug 14 · 6:00 PM · 1215 W Washington Blvd, Los Angeles, CA 90007 · 14.1 km away <span class="cat">partiful</span></div>
@@ -489,7 +498,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/1HUm6VUSxRd29XSEZhtK" target="_blank">🎉 📯House Show!✨</a>
       
       <div class="meta">Sat, Aug 8 · 6:30 PM · 821 N Harvard Blvd, Los Angeles, CA 90029 · 15.5 km away <span class="cat">partiful</span></div>
@@ -497,7 +506,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/QUIAu9VE0MdRIQWKV6Wr" target="_blank">🎉 Working From OUTSIDE @ Griffith Observatory</a>
       
       <div class="meta">Fri, Aug 7 · 12:00 PM · 2800 East Observatory Road, Los Angeles, CA 90027 · 17.9 km away <span class="cat">partiful</span></div>
@@ -505,7 +514,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/EwTe2vRDRRvwztWV0Uu1" target="_blank">🎉 zayALLCAPS summer album release party</a>
       
       <div class="meta">Fri, Jul 31 · 7:00 PM · 1922 E 7th Pl, Los Angeles, CA 90021 · 18.2 km away <span class="cat">partiful</span></div>
@@ -513,7 +522,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/AxKLGgleg4rABEKwWJMk" target="_blank">🎉 Homeboy Threads Warehouse Sale</a>
       
       <div class="meta">Sat, Aug 15 · 10:00 AM · 8990 Atlantic Ave, South Gate, CA 90280 · 22.9 km away <span class="cat">partiful</span></div>
@@ -521,7 +530,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #4c5b6b;">
+    <div class="event " data-band="late-night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/hv1ADFIlgGY4N4hUGF5R" target="_blank">🎉 ☆ GROOVE BOUNCE DUBSTEP NIGHT ☆</a>
       
       <div class="meta">Sat, Aug 15 · 9:00 PM · 6417 Whittier Blvd, Los Angeles, CA 90022 · 27.1 km away <span class="cat">partiful</span></div>
@@ -529,7 +538,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/oMXhWCi1qGCW47QZEjaZ" target="_blank">🎉 sun + sound (new moon)  ☾</a>
       
       <div class="meta">Wed, Aug 12 · 7:00 PM · 600 Mount Carmel Dr, Claremont, CA 91711 · 65.5 km away <span class="cat">partiful</span></div>
@@ -537,7 +546,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/GJd2yGu17XCtgHYz3pDY" target="_blank">🎉 PATH TO MY SOUL</a>
       
       <div class="meta">Fri, Aug 14 · 7:00 PM · 7811 Gallery 7813 Melrose Ave Los Angeles, CA 90046 <span class="cat">partiful</span></div>
@@ -546,7 +555,7 @@
     
 <h2>New on Thu, Jul 30 at 5:01 PM (3 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/b7rmtnit" target="_blank">✨ Avoiding the Cash Crunch...</a>
       
       <div class="meta">Thu, Aug 13 · 9:00 AM · Downtown, Santa Monica, CA · 6.6 km away <span class="cat">tech</span></div>
@@ -554,7 +563,7 @@
     </div>
     
 
-    <div class="event hl-mid standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
+    <div class="event hl-mid standout" data-band="morning" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/ad8y8vdp" target="_blank">✨ Maum Market LA</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Sat, Aug 1 · 11:00 AM · ROW DTLA, 777 S Alameda St, Los Angeles, CA 90021, USA · 17.3 km away <span class="cat">food</span></div>
@@ -562,7 +571,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/mtzieoip" target="_blank">✨ The Future of Healthcare: Earlier Detection, More Precise Treatment | Sunstone Stage Connects</a>
       
       <div class="meta">Fri, Jul 31 · 2:00 PM · Airport Tower, Irvine, California · 63.1 km away <span class="cat">ai</span></div>
@@ -571,7 +580,7 @@
     
 <h2>New on Thu, Jul 30 at 11:01 AM (1 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/ijSJjOPd9nUU5zDuYiOS" target="_blank">🎉 Girls Who Pool West LA - 08/03</a>
       
       <div class="meta">Mon, Aug 3 · 6:00 PM · 12017 Venice Blvd, Los Angeles, CA 90066 · 1.8 km away <span class="cat">partiful</span></div>
@@ -580,7 +589,7 @@
     
 <h2>New on Thu, Jul 30 at 7:01 AM (1 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/IZMFD6H4UUzJTXyKTduj" target="_blank">🎉 Gigi Flea 🌼 4100 Bar</a>
       
       <div class="meta">Sun, Aug 16 · 2:00 PM · 1087 Manzanita St, Los Angeles, CA 90029 · 16.9 km away <span class="cat">partiful</span></div>
@@ -589,7 +598,7 @@
     
 <h2>New on Thu, Jul 30 at 7:01 AM (2 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/6v2ob73q" target="_blank">✨ Broken Data Club LA with Matchbook AI</a>
       
       <div class="meta">Mon, Aug 17 · 6:00 PM · 395 Santa Monica Pl #308, Santa Monica, CA 90401, USA · 6.9 km away <span class="cat">ai</span></div>
@@ -597,7 +606,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/b128j01h" target="_blank">✨ Finops Meetup LA - Infracost</a>
       
       <div class="meta">Thu, Aug 27 · 6:30 PM · The Slice &amp; Pint, 130 W Grand Ave, El Segundo, CA 90245, USA · 8.5 km away <span class="cat">tech</span></div>
@@ -606,7 +615,7 @@
     
 <h2>New on Wed, Jul 29 at 11:01 PM (2 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/p9XZIohiJsOXzClGNp4f" target="_blank">🎉 Sundé</a>
       
       <div class="meta">Sun, Aug 2 · 7:30 PM · 1640 N Spring St, Unit A, Los Angeles, CA 90012 · 19.6 km away <span class="cat">partiful</span></div>
@@ -614,7 +623,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/v1xkvntAFT2zcSf44KxY" target="_blank">🎉 Paint &amp; sip at Ritual Café</a>
       
       <div class="meta">Fri, Jul 31 · 6:00 PM · 675 E University Dr, Unit B, Carson, CA 90746 · 21.2 km away <span class="cat">partiful</span></div>
@@ -623,7 +632,7 @@
     
 <h2>New on Wed, Jul 29 at 11:00 PM (2 events)</h2>
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/4og8knzl" target="_blank">✨ 通往美国资本市场之路：财富、创投与上市 Pathways to U.S. Capital Markets: Wealth • Venture • Listings</a>
       
       <div class="meta">Fri, Aug 7 · 2:00 PM · 18250 Colima Rd, Rowland Heights, CA 91748, USA · 47.6 km away <span class="cat">tech</span></div>
@@ -631,7 +640,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/li7y469f" target="_blank">✨ ROCK the Science by IMPOWER</a>
       
       <div class="meta">Wed, Aug 12 · 4:00 PM · UCI Beall Applied Innovation @ the Cove, 5270 California Ave #100, Irvine, CA 92617, USA · 66.2 km away <span class="cat">tech</span></div>
@@ -640,7 +649,7 @@
     
 <h2>New on Wed, Jul 29 at 5:01 PM (1 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/elG6pKm8Ml47Ew5JXLeQ" target="_blank">🎉 🀄Taiwanese &amp; Hong Kong Mahjong | Aug. 2 @ 11am-2pm (El Segundo, CA)</a>
       
       <div class="meta">Sun, Aug 2 · 11:00 AM · 700 S Allied Way, El Segundo, CA 90245 · 9.9 km away <span class="cat">partiful</span></div>
@@ -649,7 +658,7 @@
     
 <h2>New on Wed, Jul 29 at 5:01 PM (2 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/7ogrgq66" target="_blank">✨ Tech + Trails: August 2026 Hike by Salehpour Legal</a>
       
       <div class="meta">Sun, Aug 30 · 9:00 AM · Pacific Palisades, Los Angeles, CA · 10.0 km away <span class="cat">tech</span></div>
@@ -657,7 +666,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/machine-l9dn" target="_blank">✨ SWIRL: An Immersive AI/ XR Art Experience - w/ special guests King Willonious, Zelia ZZ Tan, Plexusplay and more!</a>
       
       <div class="meta">Sun, Aug 23 · 2:00 PM · Creative Technology Center, 604 Moulton Ave, Los Angeles, CA 90031, USA · 20.4 km away <span class="cat">ai</span></div>
@@ -666,7 +675,7 @@
     
 <h2>New on Wed, Jul 29 at 11:01 AM (3 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #c49a55;">
+    <div class="event hl-near" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/hf72pCOgGN7CIoxhB3mD" target="_blank">🎉 Touch Some Grass: A Black Queer Park Day</a>
       
       <div class="meta">Sun, Aug 9 · 2:00 PM · 4117 Overland Ave, Culver City, CA 90230 · 2.7 km away <span class="cat">partiful</span></div>
@@ -674,7 +683,7 @@
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #c49a55;">
+    <div class="event hl-near" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/cxqpH1eo7m33lIb3N9vQ" target="_blank">🎉 Bean Tattoo Pop-Up</a>
       
       <div class="meta">Fri, Aug 7 · 1:00 PM · 1306 Abbot Kinney Blvd, Venice, CA 90291 · 4.4 km away <span class="cat">partiful</span></div>
@@ -682,7 +691,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/OJytFQuYmMWQwZvYxP6z" target="_blank">🎉 Food &amp; Wine</a>
       
       <div class="meta">Thu, Jul 30 · 5:00 PM · 1922 Pomona Ave, Costa Mesa, CA 92627 · 60.2 km away <span class="cat">partiful</span></div>
@@ -691,7 +700,7 @@
     
 <h2>New on Wed, Jul 29 at 11:01 AM (2 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/dy1j39ng" target="_blank">✨ Unreal Jam LA 2026</a>
       
       <div class="meta">Thu, Aug 20 · 10:00 AM · ASU California Center Broadway, 1111 S Broadway Ste 100, Los Angeles, CA 90015, USA · 15.8 km away <span class="cat">tech</span></div>
@@ -699,7 +708,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/ticket500-scju" target="_blank">✨ AI Art That Makes Bank [Monday MBA #3]</a>
       
       <div class="meta">Mon, Aug 10 · 6:00 PM · The Ticket 500, 2807 Villa Way, Newport Beach, CA 92663, USA · 62.3 km away <span class="cat">ai</span></div>
@@ -708,7 +717,7 @@
     
 <h2>New on Wed, Jul 29 at 7:01 AM (1 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/mEXR8WOxKt5VE2BCtMeO" target="_blank">🎉 THE ROTATION</a>
       
       <div class="meta">Fri, Jul 31 · 5:00 PM · 1858 Echo Park Ave, Los Angeles, CA 90026 · 19.1 km away <span class="cat">partiful</span></div>
@@ -717,7 +726,7 @@
     
 <h2>New on Wed, Jul 29 at 7:01 AM (2 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/ImagiHackathon" target="_blank">✨ Science Sunday: Young Builders&#x27; Lovable/Imagi Vibe Coding Workshop</a>
       
       <div class="meta">Sun, Aug 16 · 11:00 AM · The KINN, 150 Horizon Ave, Venice, CA 90291, USA · 4.6 km away <span class="cat">ai</span></div>
@@ -725,7 +734,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/bc0x9n1v" target="_blank">✨ AI Women&#x27;s Wellness Retreat</a>
       
       <div class="meta">Sun, Aug 9 · 11:00 AM · Valley Glen, Los Angeles, CA · 20.5 km away <span class="cat">ai</span></div>
@@ -734,7 +743,7 @@
     
 <h2>New on Tue, Jul 28 at 11:01 PM (4 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/qAklfFoG3aKbagg6PQAj" target="_blank">🎉 The Dirty River EP (Release Party)</a>
       
       <div class="meta">Thu, Aug 27 · 8:00 PM · 5221 Hollywood Blvd, Los Angeles, CA 90027 · 16.2 km away <span class="cat">partiful</span></div>
@@ -742,7 +751,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/tbDld7YAXceRU0NBCwFd" target="_blank">🎉 ART IS FOR ORDINARY PEOPLE #19</a>
       
       <div class="meta">Sun, Aug 9 · 11:00 AM · 767 Maple Ave, Los Angeles, CA 90014 · 16.7 km away <span class="cat">partiful</span></div>
@@ -750,7 +759,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/s3wmz872BZ5BXCWaBJpQ" target="_blank">🎉 The Limes, David Taylor Coffey, Folk Face, Porkboii @ Limes Lagoon</a>
       
       <div class="meta">Sat, Aug 15 · 7:00 PM · Venice, Los Angeles, CA <span class="cat">partiful</span></div>
@@ -758,7 +767,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/HKaogkcSlEPtYQknM5gA" target="_blank">🎉 Los Feliz Writers Fest 2026: Tarot for Writers</a>
       
       <div class="meta">Sat, Aug 22 · 2:00 PM · Los Feliz, Los Angeles, CA <span class="cat">partiful</span></div>
@@ -767,7 +776,7 @@
     
 <h2>New on Tue, Jul 28 at 11:00 PM (1 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/wnzmg94c" target="_blank">✨ AI, Faith, and The End of History: City Bible Church + AI Safety Awareness Project</a>
       
       <div class="meta">Sat, Aug 8 · 7:00 AM · City Bible Church, 948 E 2nd St 2nd floor, Los Angeles, CA 90012, USA · 18.4 km away <span class="cat">ai</span></div>
@@ -776,7 +785,7 @@
     
 <h2>New on Tue, Jul 28 at 5:01 PM (19 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/8RbX0rFQdIuWRh8cigRk" target="_blank">🎉 Sabina Soundcheck - Open Mic Night at La Sabina Wine Bar</a>
       
       <div class="meta">Fri, Jul 31 · 6:00 PM · 11050 W Washington Blvd, Culver City, CA 90232 · 2.0 km away <span class="cat">partiful</span></div>
@@ -784,7 +793,7 @@
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #c49a55;">
+    <div class="event hl-near" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/otVrpxSpBykDSQt83WGU" target="_blank">🎉 Cup Making Workshop</a>
       
       <div class="meta">Sat, Aug 1 · 3:30 PM · 1501 Main St, Ste 103, Venice, CA 90291 · 4.4 km away <span class="cat">partiful</span></div>
@@ -792,7 +801,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/Nk2EbfTpGYPbXOHKDw23" target="_blank">🎉 LACMA Jazz Night Meet-Up</a>
       
       <div class="meta">Fri, Aug 7 · 6:00 PM · 5905 Wilshire Blvd, Los Angeles, CA 90036 · 9.2 km away <span class="cat">partiful</span></div>
@@ -800,7 +809,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/W7m4Aw7Q1s84V2N8xkAe" target="_blank">🎉 Lit Salon LA</a>
       
       <div class="meta">Thu, Jul 30 · 7:00 PM · 7494 Santa Monica Blvd, West Hollywood, CA 90046 · 12.5 km away <span class="cat">partiful</span></div>
@@ -808,7 +817,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/tCSf3uVAPyylRVgSilV3" target="_blank">🎉 café_con_tech_v1.0.7</a>
       
       <div class="meta">Wed, Jul 29 · 4:00 PM · 3882 W 6th St, Los Angeles, CA 90020 · 12.6 km away <span class="cat">partiful</span></div>
@@ -816,7 +825,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/MzFlDHq2WMlmaRPPCy3F" target="_blank">🎉 Flaunt Fam Pool Party Sat Aug 1st</a>
       
       <div class="meta">Sat, Aug 1 · 3:00 PM · 1254 S Figueroa St, FL 8, Los Angeles, CA 90015 · 14.9 km away <span class="cat">partiful</span></div>
@@ -824,7 +833,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/fAyXewal3tcjE7m0Q4Gc" target="_blank">🎉 Denada Flea</a>
       
       <div class="meta">Sun, Aug 2 · 10:00 AM · 676 S La Fayette Park Pl, Los Angeles, CA 90057 · 15.0 km away <span class="cat">partiful</span></div>
@@ -832,7 +841,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #4c5b6b;">
+    <div class="event hl-mid" data-band="late-night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/qrhyLoWpiQgvUrAhtUxr" target="_blank">🎉 CASA PERREO at Somewhere Special</a>
       
       <div class="meta">Sat, Aug 15 · 9:00 PM · 929 S Broadway, Los Angeles, CA 90015 · 15.8 km away <span class="cat">partiful</span></div>
@@ -840,7 +849,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/xFwKWovOP7EORzvRvj8K" target="_blank">🎉 BOBO THAI OPENING PARTY</a>
       
       <div class="meta">Sat, Aug 1 · 6:00 PM · 3705 W Sunset Blvd, Los Angeles, CA 90026 · 16.9 km away <span class="cat">partiful</span></div>
@@ -848,7 +857,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/qjYadXLU7nWHaQ06gzBH" target="_blank">🎉 Los Feliz Writers Fest 2026: Voices of Los Feliz - Radically Human</a>
       
       <div class="meta">Sat, Aug 22 · 6:30 PM · 4800 Hollywood Blvd, Los Angeles, CA 90027 · 16.9 km away <span class="cat">partiful</span></div>
@@ -856,7 +865,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/nxnJE64vXl1o82G9Sz75" target="_blank">🎉 ocean, SEE YOU SOON! album listening</a>
       
       <div class="meta">Sat, Aug 15 · 6:00 PM · 1340 E 6th St, Los Angeles, CA 90021 · 18.4 km away <span class="cat">partiful</span></div>
@@ -864,7 +873,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/14vCQBweewYH12SpRmsp" target="_blank">🎉 LA Shih Tzu Meet Up</a>
       
       <div class="meta">Sun, Aug 2 · 5:00 PM · 3501 Monterey Rd, Los Angeles, CA 90032 · 23.9 km away <span class="cat">partiful</span></div>
@@ -872,7 +881,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/RzAwCWr1A0hirAXD1WiG" target="_blank">🎉 Summer School 5: DIY Publishing and Printmaking</a>
       
       <div class="meta">Sat, Aug 8 · 10:00 AM · 1638 Colorado Blvd, Los Angeles, CA 90041 · 26.1 km away <span class="cat">partiful</span></div>
@@ -880,7 +889,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/XWGwQiRDswUbHRAY5zKJ" target="_blank">🎉 Yap &amp; Stitch: Long Beach Meet-Up</a>
       
       <div class="meta">Sat, Aug 15 · 3:00 PM · 1595 W Willow St, Long Beach, CA 90810 · 29.3 km away <span class="cat">partiful</span></div>
@@ -888,7 +897,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/ebsg1Dclcck6c0N4vP8n" target="_blank">🎉 MAHJONG NIGHT</a>
       
       <div class="meta">Wed, Aug 5 · 8:00 PM · 1115 E Wardlow Rd, Long Beach, CA 90807 · 29.7 km away <span class="cat">partiful</span></div>
@@ -896,7 +905,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/Pftispf61i0DPFt0MPJD" target="_blank">🎉 PLAYGRNDS POP-UP #3</a>
       
       <div class="meta">Sat, Aug 15 · 9:00 AM · 11901 Westminster Ave, Ste C, Garden Grove, CA 92843 · 53.3 km away <span class="cat">partiful</span></div>
@@ -904,7 +913,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/WpDPDQWh6rZNlI84GxiF" target="_blank">🎉 Shimokita LA: Thrift Yard Sale</a>
       
       <div class="meta">Sat, Aug 8 · 10:00 AM · Orange, CA <span class="cat">partiful</span></div>
@@ -912,7 +921,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #4c5b6b;">
+    <div class="event " data-band="late-night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/V8xIdTOqfVa7LXbuNjCo" target="_blank">🎉 Boiler Tearoom: Tea Rave</a>
       
       <div class="meta">Sat, Aug 1 · 10:00 PM · 1598 Oak Street, Los Angeles, CA 90015 <span class="cat">partiful</span></div>
@@ -920,7 +929,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/LifmeCi9Lo8iUNhhBfzo" target="_blank">🎉 Los Feliz Writers Fest 2026: POETS ARE THE NEW POP STARS</a>
       
       <div class="meta">Fri, Aug 21 · 8:00 PM · Los Feliz, Los Angeles, CA <span class="cat">partiful</span></div>
@@ -929,7 +938,7 @@
     
 <h2>New on Tue, Jul 28 at 5:01 PM (7 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/hb3md7g5" target="_blank">✨ LA: Happy Hour &amp; Headshots</a>
       
       <div class="meta">Thu, Aug 13 · 5:30 PM · 9739 Culver Blvd, Culver City, CA 90232, USA · 3.8 km away <span class="cat">tech</span></div>
@@ -937,7 +946,7 @@
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/new-builders" target="_blank">✨ PITCHFEST | New Wave of Builders #PHFEST26</a>
       
       <div class="meta">Thu, Aug 13 · 5:00 PM · Mid-City, Santa Monica, California · 6.2 km away <span class="cat">tech</span></div>
@@ -945,7 +954,7 @@
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/lf0wwo4w" target="_blank">✨ LA Smarterships Happy Hour</a>
       
       <div class="meta">Thu, Aug 13 · 5:00 PM · Velvet Rose Rooftop Lounge, 1301 Ocean Ave, Santa Monica, CA 90401, USA · 7.4 km away <span class="cat">tech</span></div>
@@ -953,7 +962,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/0zfdabya" target="_blank">✨ MFV Partners Deep Tech + Defense Industrial Base Happy Hour</a>
       
       <div class="meta">Wed, Jul 29 · 5:30 PM · Hawthorne, CA · 12.2 km away <span class="cat">tech</span></div>
@@ -961,7 +970,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/Pastagirlfriend" target="_blank">✨ Meet me at the Pasta Girlfriend Party</a>
       
       <div class="meta">Fri, Aug 28 · 7:00 PM · Silver Lake Pool &amp; Inn, 4141 Santa Monica Blvd, Los Angeles, CA 90029, USA · 16.8 km away <span class="cat">food</span></div>
@@ -969,7 +978,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/y8ep0r4h" target="_blank">✨ SoCalSec - August 2026</a>
       
       <div class="meta">Mon, Aug 17 · 6:00 PM · Raymond Ave Brewing Company, 1755 Raymond Ave, Anaheim, CA 92801, USA · 49.8 km away <span class="cat">tech</span></div>
@@ -977,7 +986,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/6ae65n23" target="_blank">✨ tech night!</a>
       
       <div class="meta">Tue, Aug 18 · 6:00 PM · University Town Center, Irvine, CA 92612, USA · 66.4 km away <span class="cat">tech</span></div>
@@ -986,7 +995,7 @@
     
 <h2>New on Tue, Jul 28 at 11:01 AM (18 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/gJdZ1KqU4fi2F6z7yA8S" target="_blank">🎉 Girls Who Pool West LA 07/28</a>
       
       <div class="meta">Tue, Jul 28 · 6:00 PM · 12017 Venice Blvd, Los Angeles, CA 90066 · 1.8 km away <span class="cat">partiful</span></div>
@@ -994,7 +1003,7 @@
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/KVOKXPOBofUgoXm1uVFg" target="_blank">🎉 🌞Solma Charm🖤</a>
       
       <div class="meta">Sun, Aug 30 · 10:00 AM · 905 Pacific Ave, Venice, CA 90291 · 5.3 km away <span class="cat">partiful</span></div>
@@ -1002,7 +1011,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/veHhBS43mCS6K60rQ3qm" target="_blank">🎉 CALL ME. ★ the song, the press conference, the newspaper.</a>
       
       <div class="meta">Tue, Aug 4 · 12:00 PM · 1058 S Fairfax Ave, Los Angeles, CA 90019 · 9.2 km away <span class="cat">partiful</span></div>
@@ -1010,7 +1019,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/ZmMIslfEEXUjxJtV6pmW" target="_blank">🎉 Café Matcha Melrose Place Grand Opening</a>
       
       <div class="meta">Wed, Aug 5 · 8:00 AM · 705 N Alfred St, West Hollywood, CA 90069 · 10.2 km away <span class="cat">partiful</span></div>
@@ -1018,7 +1027,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/vRDkX7Ep9hiBeU00ZCWV" target="_blank">🎉 The Polo Party</a>
       
       <div class="meta">Sat, Aug 1 · 8:00 PM · 8911 W Sunset Blvd, West Hollywood, CA 90069 · 11.0 km away <span class="cat">partiful</span></div>
@@ -1026,7 +1035,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #4c5b6b;">
+    <div class="event hl-mid" data-band="late-night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/HZnrzh2NOsav3NVvyz29" target="_blank">🎉 life of the party</a>
       
       <div class="meta">Fri, Jul 31 · 10:00 PM · 5574 Melrose Ave, Los Angeles, CA 90038 · 13.4 km away <span class="cat">partiful</span></div>
@@ -1034,7 +1043,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #4c5b6b;">
+    <div class="event hl-mid" data-band="late-night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/6z0orZNASqWSVbYyhtGY" target="_blank">🎉 Big House Presents AMERICAN SPIRIT</a>
       
       <div class="meta">Fri, Jul 31 · 10:00 PM · 1625 S Los Angeles St, Los Angeles, CA 90015 · 15.5 km away <span class="cat">partiful</span></div>
@@ -1042,7 +1051,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/yNOhRmri522AY5lhm3Po" target="_blank">🎉 jazz night w/ Joey Navarro: presented by micah&#x27;s market</a>
       
       <div class="meta">Mon, Aug 3 · 7:30 PM · 4628 Hollywood Blvd, Los Angeles, CA 90027 · 16.9 km away <span class="cat">partiful</span></div>
@@ -1050,7 +1059,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/kF87zCJqbekBTXU3YZVO" target="_blank">🎉 Brain Rot Book Club LA</a>
       
       <div class="meta">Sat, Sep 19 · 4:00 PM · 4800 Hollywood Blvd, Los Angeles, CA 90027 · 16.9 km away <span class="cat">partiful</span></div>
@@ -1058,7 +1067,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/FUIYNbaoVKCZaEUkBeWI" target="_blank">🎉 Los Feliz Writers Fest 2026: Personal Essay Writing Workshop</a>
       
       <div class="meta">Thu, Aug 20 · 7:00 PM · 1850 N Vermont Ave, Los Angeles, CA 90027 · 16.9 km away <span class="cat">partiful</span></div>
@@ -1066,7 +1075,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #4c5b6b;">
+    <div class="event hl-mid" data-band="late-night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/N94jxfE5zIFUjckMRWao" target="_blank">🎉 DJ Josh Da Costa &amp; DJ Amanda Siegel</a>
       
       <div class="meta">Fri, Jul 31 · 9:00 PM · 2906 W Sunset Blvd, Los Angeles, CA 90026 · 16.9 km away <span class="cat">partiful</span></div>
@@ -1074,7 +1083,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/Mi2qHsXC6scAhMejFX7v" target="_blank">🎉 Lez Disko @ Nico&#x27;s</a>
       
       <div class="meta">Sat, Aug 1 · 8:00 PM · 3111 Glendale Blvd, Ste 2, Los Angeles, CA 90039 · 20.4 km away <span class="cat">partiful</span></div>
@@ -1082,7 +1091,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/axACFTzwJajAd9Oukksf" target="_blank">🎉 Disco and Dancing at Baby Battista</a>
       
       <div class="meta">Fri, Jul 31 · 8:00 PM · 3111 Glendale Blvd, Ste 2, Los Angeles, CA 90039 · 20.4 km away <span class="cat">partiful</span></div>
@@ -1090,7 +1099,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/nRcp7qob6feXGEdERsWD" target="_blank">🎉 FORESTER &amp; FRIENDS</a>
       
       <div class="meta">Sat, Aug 1 · 2:00 PM · 22969 Pacific Coast Hwy, Malibu, CA 90265 · 24.2 km away <span class="cat">partiful</span></div>
@@ -1098,7 +1107,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/Jh60KaTn9q4dqZBWpiDe" target="_blank">🎉 Nica&#x27;s Necessities turns 6</a>
       
       <div class="meta">Sun, Aug 9 · 12:00 PM · 3976 Atlantic Ave, Long Beach, CA 90807 · 29.0 km away <span class="cat">partiful</span></div>
@@ -1106,7 +1115,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/apeCYsl37c802t4cmh8A" target="_blank">🎉 Chantry Flat Hike</a>
       
       <div class="meta">Sun, Aug 9 · 8:00 AM · Santa Anita Canyon, Sierra Madre, CA 91024 · 42.7 km away <span class="cat">partiful</span></div>
@@ -1114,7 +1123,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/OM0RRNh6rFAIXzvKk9Sv" target="_blank">🎉 South Asian Pop-Up Cafe</a>
       
       <div class="meta">Sat, Aug 1 · 11:00 AM · 8863 Venice Blvd., Los Angeles, CA 90034 <span class="cat">partiful</span></div>
@@ -1122,7 +1131,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/jMXDuwqG3igJIOqwUdZR" target="_blank">🎉 community in bloom !</a>
       
       <div class="meta">Sat, Aug 15 · 5:00 PM · Elysian Park, Los Angeles, CA <span class="cat">partiful</span></div>
@@ -1131,7 +1140,7 @@
     
 <h2>New on Tue, Jul 28 at 11:00 AM (1 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/commerce-symposium-this-is-water-la" target="_blank">✨ Commerce Symposium: This Is Water | LA</a>
       
       <div class="meta">Thu, Sep 10 · 4:00 PM · The West Hollywood EDITION, 9040 Sunset Blvd, West Hollywood, CA 90069, USA · 11.0 km away <span class="cat">tech</span></div>
@@ -1140,7 +1149,7 @@
     
 <h2>New on Tue, Jul 28 at 7:01 AM (2 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/aqg24e23" target="_blank">✨ Coalition gathering at the LA Digital Government Summit [informal]</a>
       
       <div class="meta">Tue, Jul 28 · 4:30 PM · The Westin Bonaventure Hotel &amp; Suites, Los Angeles, 404 S Figueroa St, Los Angeles, CA 90071, USA · 16.7 km away <span class="cat">ai</span></div>
@@ -1148,7 +1157,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/4wi40o71" target="_blank">✨ Leading Innovation using AI-Art Robbins</a>
       
       <div class="meta">Thu, Aug 13 · 6:00 PM · 2807 Villa Way, Newport Beach, CA 92663, USA · 62.3 km away <span class="cat">ai</span></div>
@@ -1157,7 +1166,7 @@
     
 <h2>New on Mon, Jul 27 at 11:01 PM (1 events)</h2>
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/XAQiK4BmkAyfMBuuqk83" target="_blank">🎉 Joe’s Vine Dj set 8/29</a>
       
       <div class="meta">Sat, Aug 29 · 4:00 PM · 2142 E Fourth St, Long Beach, CA 90814 · 34.2 km away <span class="cat">partiful</span></div>
@@ -1166,7 +1175,7 @@
     
 <h2>New on Mon, Jul 27 at 11:00 PM (3 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/robot-cup-hackathon-aug26" target="_blank">✨ Robot Soccer Cup Hack Day</a>
       
       <div class="meta">Fri, Aug 14 · 9:00 AM · 1800 Abbot Kinney Blvd, Venice, CA 90291, USA · 3.6 km away <span class="cat">ai</span></div>
@@ -1174,7 +1183,7 @@
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/AfterglowSept17" target="_blank">✨ Afterglow: An End-of-Summer Celebration</a>
       
       <div class="meta">Thu, Sep 17 · 8:00 PM · The KINN, 150 Horizon Ave, Venice, CA 90291, USA · 4.6 km away <span class="cat">tech</span></div>
@@ -1182,7 +1191,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/y42yc90q" target="_blank">✨ Sifr - Fireside Chat 01</a>
       
       <div class="meta">Sun, Aug 9 · 6:00 PM · Yorba Linda, CA · 56.6 km away <span class="cat">tech</span></div>
@@ -1191,7 +1200,7 @@
     
 <h2>New on Mon, Jul 27 at 5:01 PM (3 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/52gDsiVFsv7LtwY7R8Zb" target="_blank">🎉 FEEL SEEN: Pen &amp; Presence</a>
       
       <div class="meta">Sat, Aug 8 · 10:00 AM · 5905 Wilshire Blvd, Los Angeles, CA 90036 · 9.2 km away <span class="cat">partiful</span></div>
@@ -1199,7 +1208,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/NVIT52kV1bgBRdqCVjIt" target="_blank">🎉 CANDELA DISCO at Somewhere Special</a>
       
       <div class="meta">Sat, Aug 15 · 3:00 PM · 929 S Broadway, Los Angeles, CA 90015 · 15.8 km away <span class="cat">partiful</span></div>
@@ -1207,7 +1216,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/tj13gPPVhLHThnowvbVD" target="_blank">🎉 ¡Mmm, Pues!</a>
       
       <div class="meta">Sat, Aug 1 · 4:00 PM · 5321 Long Beach Blvd, Long Beach, CA 90805 · 26.1 km away <span class="cat">partiful</span></div>
@@ -1216,7 +1225,7 @@
     
 <h2>New on Mon, Jul 27 at 5:01 PM (5 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/6r50ux2o" target="_blank">✨ Tooling Engineering Happy Hour</a>
       
       <div class="meta">Thu, Aug 6 · 5:00 PM · Los Angeles Ale Works - Brewery &amp; Tasting Room, 12918 Cerise Ave, Hawthorne, CA 90250, USA · 12.2 km away <span class="cat">tech</span></div>
@@ -1224,7 +1233,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/jzdn5ub0" target="_blank">✨ Scientist to Founder by Fifty Years</a>
       
       <div class="meta">Mon, Jul 27 · 5:00 PM · Pasadena, CA · 31.3 km away <span class="cat">tech</span></div>
@@ -1232,7 +1241,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/80je2lej" target="_blank">✨ Vinci Recruiting Happy Hour at DAC 2026</a>
       
       <div class="meta">Tue, Jul 28 · 4:30 PM · Downtown, Long Beach, CA · 33.3 km away <span class="cat">tech</span></div>
@@ -1240,7 +1249,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/piqbwqhp" target="_blank">✨ Notion Meetup: Orange County</a>
       
       <div class="meta">Wed, Aug 12 · 5:00 PM · WorkWell, 17322 Murphy Ave, Irvine, CA 92614, USA · 64.5 km away <span class="cat">ai</span></div>
@@ -1248,7 +1257,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/y4rpqdqo" target="_blank">✨ evoNexus Irvine&#x27;s Weekly GenAI Meetup</a>
       
       <div class="meta">Thu, Jul 30 · 5:30 PM · EvoNexus Irvine, 101 Academy Wy # 110, Irvine, CA 92617, USA · 65.2 km away <span class="cat">ai</span></div>
@@ -1257,7 +1266,7 @@
     
 <h2>New on Mon, Jul 27 at 11:00 AM (2 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #c49a55;">
+    <div class="event hl-near" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/sy9leuhv" target="_blank">✨ August Meetup @ O&#x27;Brien&#x27;s Pub</a>
       
       <div class="meta">Sat, Aug 22 · 2:00 PM · O&#x27;Briens Irish Pub, 2226 Wilshire Blvd, Santa Monica, CA 90403, USA · 6.8 km away <span class="cat">tech</span></div>
@@ -1265,7 +1274,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/sz1j8xx0" target="_blank">✨ Session 3: Develop an Actionable AI Implementation Plan</a>
       
       <div class="meta">Thu, Aug 6 · 1:30 PM · 245 E 3rd St, Long Beach, CA 90802, USA · 32.9 km away <span class="cat">ai</span></div>
@@ -1274,7 +1283,7 @@
     
 <h2>New on Mon, Jul 27 at 7:01 AM (1 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/2TUKVfXDpA9TkRezTldL" target="_blank">🎉 Not Another Party</a>
       
       <div class="meta">Sat, Aug 8 · 7:30 PM · 799 Towne Ave, Los Angeles, CA 90021 · 16.7 km away <span class="cat">partiful</span></div>
@@ -1283,7 +1292,7 @@
     
 <h2>New on Mon, Jul 27 at 7:00 AM (1 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/fefbx3vn" target="_blank">✨ AI Policy August Meetup</a>
       
       <div class="meta">Wed, Aug 5 · 6:00 PM · Highland Park Brewery, 1220 N Spring St, Los Angeles, CA 90012, USA · 19.1 km away <span class="cat">ai</span></div>
@@ -1292,7 +1301,7 @@
     
 <h2>New on Sun, Jul 26 at 11:01 PM (10 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/AhV0RiWK2ghhzI9FtoGJ" target="_blank">🎉 Pet Rats Radio Music Fest</a>
       
       <div class="meta">Sat, Aug 15 · 6:00 PM · 4615 Exposition Blvd, Los Angeles, CA 90016 · 7.2 km away <span class="cat">partiful</span></div>
@@ -1300,7 +1309,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/XuW6PFUKfVHxQEXYPuI0" target="_blank">🎉 BB28 LIVE EVICTION WEEKLY WATCH PARTY</a>
       
       <div class="meta">Thu, Aug 6 · 7:00 PM · 8928 Santa Monica Blvd, West Hollywood, CA 90069 · 10.2 km away <span class="cat">partiful</span></div>
@@ -1308,7 +1317,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/Fgxj1Jj9MHSJCwrYyQX3" target="_blank">🎉 Gather &amp; Bloom: Part 2</a>
       
       <div class="meta">Sun, Aug 2 · 2:30 PM · 420 N Larchmont Blvd, Los Angeles, CA 90004 · 13.4 km away <span class="cat">partiful</span></div>
@@ -1316,7 +1325,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/FMk9T3MDoM7hHHmJyj19" target="_blank">🎉 Under Candlelight Experience</a>
       
       <div class="meta">Sun, Aug 23 · 4:00 PM · 636 Cypress Ave, Hermosa Beach, CA 90254 · 15.2 km away <span class="cat">partiful</span></div>
@@ -1324,7 +1333,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/HVQLvEUtgkxVs6efaR1T" target="_blank">🎉 Lion&#x27;s Gate Gala</a>
       
       <div class="meta">Sat, Aug 8 · 6:00 PM · 2663 Queen St, Los Angeles, CA 90039 · 19.7 km away <span class="cat">partiful</span></div>
@@ -1332,7 +1341,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/wItHGXzDk0tFZQ9GUUt1" target="_blank">🎉 Big Baba&#x27;s Wings, Pop Up</a>
       
       <div class="meta">Sun, Aug 16 · 6:00 PM · 4871 Ruth Ave, Los Angeles, CA 90041 · 26.8 km away <span class="cat">partiful</span></div>
@@ -1340,7 +1349,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/HtPfWXyGSyrdYBmpcMn3" target="_blank">🎉 Lexus US Open of Surfing 🌊</a>
       
       <div class="meta">Sat, Jul 25 · 7:30 AM · 315 Pacific Coast Hwy, Huntington Beach, CA 92648 · 54.0 km away <span class="cat">partiful</span></div>
@@ -1348,7 +1357,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/7YmmWgFYqjtAOjEMDHP3" target="_blank">🎉 Crafty Crew Decorate A Journal Clamp!</a>
       
       <div class="meta">Sun, Aug 23 · 5:00 PM · 2357 Foothill Blvd, La Verne, CA 91750 · 62.4 km away <span class="cat">partiful</span></div>
@@ -1356,7 +1365,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/0RnKyEje7Vll9PxLhdCc" target="_blank">🎉 custard’s coworking club</a>
       
       <div class="meta">Fri, Aug 28 · 11:00 AM · North Hollywood, Los Angeles, CA <span class="cat">partiful</span></div>
@@ -1364,7 +1373,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/R33oL4WBpxK0cZuiqKry" target="_blank">🎉 A MAJOR DETAILS HOUSE PARTY</a>
       
       <div class="meta">Sat, Aug 8 · 7:00 PM · Lorraine Bracco <span class="cat">partiful</span></div>
@@ -1373,7 +1382,7 @@
     
 <h2>New on Sun, Jul 26 at 5:01 PM (2 events)</h2>
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/Me8ggHeKDtpXT0WxYcdC" target="_blank">🎉 Aura</a>
       
       <div class="meta">Sat, Aug 29 · 4:00 PM · 213 Alabama St, Huntington Beach, CA 92648 · 54.0 km away <span class="cat">partiful</span></div>
@@ -1381,7 +1390,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/2JAECe1v2hRKuD4HXsXp" target="_blank">🎉 ALL GAS NO BRAKES</a>
       
       <div class="meta">Sat, Aug 8 · 2:30 PM · 2201 N White Ave, Pomona, CA 91768 · 61.1 km away <span class="cat">partiful</span></div>
@@ -1390,7 +1399,7 @@
     
 <h2>New on Sun, Jul 26 at 5:00 PM (1 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/lcghxw9m" target="_blank">✨ Massive Coverage: How AI is changing the future of OffSec</a>
       
       <div class="meta">Wed, Aug 26 · 5:30 PM · Downtown, Santa Monica, CA · 6.6 km away <span class="cat">ai</span></div>
@@ -1399,7 +1408,7 @@
     
 <h2>New on Sun, Jul 26 at 2:35 PM (8 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/WT3pDmbUZYPEUT03GMgk" target="_blank">🎉 The Unified Field Experience with Goli</a>
       
       <div class="meta">Sun, Aug 9 · 6:00 PM · 174 N Canyon View Dr, Los Angeles, CA 90049 · 8.9 km away <span class="cat">partiful</span></div>
@@ -1407,7 +1416,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/BAXR2NKTTmBOjBzHIBNi" target="_blank">🎉 Sound Bath</a>
       
       <div class="meta">Sun, Jul 26 · 3:15 PM · 7416 Beverly Blvd, Los Angeles, CA 90036 · 11.6 km away <span class="cat">partiful</span></div>
@@ -1415,7 +1424,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/lKxmmAcToy2RljsmGMF9" target="_blank">🎉 Variety Show</a>
       
       <div class="meta">Sat, Aug 22 · 6:30 PM · 636 Cypress Ave, Hermosa Beach, CA 90254 · 15.2 km away <span class="cat">partiful</span></div>
@@ -1423,7 +1432,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/bGX637I6yxdK5cnLJnsg" target="_blank">🎉 LAZER BEAM @Woodbridge w/ SEED + BRONCO FORTE</a>
       
       <div class="meta">Mon, Jul 27 · 7:00 PM · 799 Towne Ave, Los Angeles, CA 90021 · 16.7 km away <span class="cat">partiful</span></div>
@@ -1431,7 +1440,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/0Z5DdylpN2kWaE4zaSVW" target="_blank">🎉 El Chinchorro</a>
       
       <div class="meta">Sun, Jul 26 · 12:00 PM · 929 Academy Rd, Los Angeles, CA 90012 · 19.6 km away <span class="cat">partiful</span></div>
@@ -1439,7 +1448,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/k5QtpRMGAfWzWTUkY5yh" target="_blank">🎉 the crafty hour</a>
       
       <div class="meta">Sun, Aug 30 · 3:00 PM · 154 E First St, Pomona, CA 91767 · 62.4 km away <span class="cat">partiful</span></div>
@@ -1447,7 +1456,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/Jjv9Kcs2N6ASKhKa6h2I" target="_blank">🎉 Tangerine Tales Coffee Club</a>
       
       <div class="meta">Sun, Aug 2 · 11:00 AM · 14661 Franklin Ave, Tustin, CA 92780 · 64.3 km away <span class="cat">partiful</span></div>
@@ -1455,7 +1464,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/kPkoGDtFgVDiTy6edqsW" target="_blank">🎉 custard’s coworking club</a>
       
       <div class="meta">Tue, Aug 4 · 1:00 PM · North Hollywood, Los Angeles, CA <span class="cat">partiful</span></div>
@@ -1464,7 +1473,7 @@
     
 <h2>New on Sun, Jul 26 at 2:35 PM (2 events)</h2>
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/ticket500-3b3l" target="_blank">✨ 🎤 😭Startup Standup: Founders Therapy [Monday MBA Series #2]</a>
       
       <div class="meta">Mon, Aug 3 · 6:00 PM · The Ticket 500, 2807 Villa Way, Newport Beach, CA 92663, USA · 62.3 km away <span class="cat">tech</span></div>
@@ -1472,7 +1481,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/ticket500-xzhp" target="_blank">✨ AI Clinic for OC Business Owners &amp; Operators</a>
       
       <div class="meta">Fri, Jul 31 · 6:00 PM · 2807 Villa Way, Newport Beach, CA 92663, USA · 62.3 km away <span class="cat">ai</span></div>
@@ -1481,7 +1490,7 @@
     
 <h2>New on Sat, Jul 25 at 7:07 PM (9 events)</h2>
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/uFLESul16szezXx2L5Bl" target="_blank">🎉 Picnic Meetup</a>
       
       <div class="meta">Sun, Jul 26 · 5:00 PM · 405 Hilgard Ave, Los Angeles, CA 90095 · 8.5 km away <span class="cat">partiful</span></div>
@@ -1489,7 +1498,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/NBzziLyJv1GTUOmVlNqv" target="_blank">🎉 International Dessert Potluck</a>
       
       <div class="meta">Sun, Aug 2 · 2:00 PM · 8009 Beverly Blvd, Los Angeles, CA 90048 · 11.1 km away <span class="cat">partiful</span></div>
@@ -1497,7 +1506,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #4c5b6b;">
+    <div class="event hl-mid" data-band="late-night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/4P4F2kYQbXvMNwwWlEzd" target="_blank">🎉 Sommer Break</a>
       
       <div class="meta">Thu, Jul 30 · 10:00 PM · 1541 Wilcox Ave, Los Angeles, CA 90028 · 14.5 km away <span class="cat">partiful</span></div>
@@ -1505,7 +1514,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/arBG55fJ0MHAgWKStlN3" target="_blank">🎉 CLUB JAMILA</a>
       
       <div class="meta">Sat, Aug 15 · 7:00 PM · 665 N Heliotrope Dr, Los Angeles, CA 90004 · 14.7 km away <span class="cat">partiful</span></div>
@@ -1513,7 +1522,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/WeSOeGG4rUdJP6puDFTD" target="_blank">🎉 Andrew Matarazzo x Barnes &amp; Noble</a>
       
       <div class="meta">Tue, Jul 28 · 6:30 PM · 12136 Ventura Blvd, Studio City, CA 91604 · 16.3 km away <span class="cat">partiful</span></div>
@@ -1521,7 +1530,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/6iRz0w7NlcxHKprtxP5Z" target="_blank">🎉 Free Benefit Show for CHIRLA</a>
       
       <div class="meta">Fri, Jul 31 · 7:30 PM · 4633 Hollywood Blvd, Los Angeles, CA 90027 · 16.9 km away <span class="cat">partiful</span></div>
@@ -1529,7 +1538,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/Cmzh9Uj3C7OUxa8OlirU" target="_blank">🎉 My Friend&#x27;s Show - Downtown Los Angeles</a>
       
       <div class="meta">Sat, Aug 8 · 8:00 PM · 537 Ceres Ave, Los Angeles, CA 90013 · 17.6 km away <span class="cat">partiful</span></div>
@@ -1537,7 +1546,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/ugz9qCHoM8aZS4QFjazl" target="_blank">🎉 Come to Brasil LA Premiere</a>
       
       <div class="meta">Tue, Jul 28 · 7:30 PM · 939 Chung King Rd, Los Angeles, CA 90012 · 18.8 km away <span class="cat">partiful</span></div>
@@ -1545,7 +1554,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/DJE8sNDP969n7Z749W5l" target="_blank">🎉 JFFD Pop Up Pantry</a>
       
       <div class="meta">Sat, Aug 1 · 11:00 AM · 19694 Beach Blvd, Huntington Beach, CA 92648 · 53.1 km away <span class="cat">partiful</span></div>
@@ -1554,7 +1563,7 @@
     
 <h2>New on Sat, Jul 25 at 7:07 PM (3 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/SEO101Sep22" target="_blank">✨ SEO 101: How to Rank on Google &amp; AI ChatGPT Search Platforms</a>
       
       <div class="meta">Tue, Sep 22 · 10:00 AM · The KINN, 150 Horizon Ave, Venice, CA 90291, USA · 4.6 km away <span class="cat">ai</span></div>
@@ -1562,7 +1571,7 @@
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/b7l3rewo" target="_blank">✨ Hospitality Pool Party!</a>
       
       <div class="meta">Mon, Aug 3 · 12:00 PM · 2282 El Contento Dr, Los Angeles, CA 90068, USA · 15.8 km away <span class="cat">food</span></div>
@@ -1570,7 +1579,7 @@
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/8osiy8ql" target="_blank">✨ Farm Dinner at Eden</a>
       
       <div class="meta">Sun, Aug 9 · 5:00 PM · 2767 Grand Ave, Fillmore, CA 93015, USA · 68.0 km away <span class="cat">food</span></div>
@@ -1579,7 +1588,7 @@
     
 <h2>New on Sat, Jul 25 at 2:05 PM (41 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #c49a55;">
+    <div class="event hl-near" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/fcNg18wXOYFcWyEbTRGd" target="_blank">🎉 A listening experience at NOUN with SKIRTTS SOUNDS</a>
       
       <div class="meta">Sat, Aug 1 · 3:00 PM · 4065 Glencoe Ave, Marina del Rey, CA 90292 · 1.7 km away <span class="cat">partiful</span></div>
@@ -1587,7 +1596,7 @@
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/tuLyGEbHxKAahCXz6t2V" target="_blank">🎉 Pop-up cafe @Rivian Venice</a>
       
       <div class="meta">Sat, Aug 8 · 10:00 AM · 660 Venice Blvd, Venice, CA 90291 · 3.5 km away <span class="cat">partiful</span></div>
@@ -1595,7 +1604,7 @@
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #4c5b6b;">
+    <div class="event hl-near" data-band="late-night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/fNre7xjOK0xj5aqqEh8W" target="_blank">🎉 JSTAGIRLSNIGHT 8/1</a>
       
       <div class="meta">Sat, Aug 1 · 10:00 PM · 52 Windward Ave, Venice, CA 90291 · 4.4 km away <span class="cat">partiful</span></div>
@@ -1603,7 +1612,7 @@
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/O21iPWcIZtbfmjfoyhMj" target="_blank">🎉 Peak Design 
 Photo Walk 
 Inanimate Stories: Street Still Life</a>
@@ -1613,7 +1622,7 @@ Inanimate Stories: Street Still Life</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/LjHZVa207EGrI8qAoXMJ" target="_blank">🎉 Pancake Night!</a>
       
       <div class="meta">Sat, Jul 25 · 6:45 PM · 1825 Stanford St, Santa Monica, CA 90404 · 5.2 km away <span class="cat">partiful</span></div>
@@ -1621,7 +1630,7 @@ Inanimate Stories: Street Still Life</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #c49a55;">
+    <div class="event hl-near" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/uns3w5VVfFnu2eSJnABR" target="_blank">🎉 BTD Live</a>
       
       <div class="meta">Sat, Aug 8 · 1:00 PM · 205 Ocean Front Walk, Venice, CA 90291 · 5.3 km away <span class="cat">partiful</span></div>
@@ -1629,7 +1638,7 @@ Inanimate Stories: Street Still Life</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/BE1NPmjAgdhW26YnIyGD" target="_blank">🎉 Watercolor Workshop</a>
       
       <div class="meta">Sat, Aug 1 · 10:00 AM · 1200 Getty Center Dr, Los Angeles, CA 90049 · 10.4 km away <span class="cat">partiful</span></div>
@@ -1637,7 +1646,7 @@ Inanimate Stories: Street Still Life</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #4c5b6b;">
+    <div class="event hl-mid" data-band="late-night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/IrXO3Iis5J55bgV4E2if" target="_blank">🎉 club $$$ @ 
 On the Rox</a>
       
@@ -1646,7 +1655,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/4T6O2LlJ0te80lUxp1d6" target="_blank">🎉 CRAFT CINEMA</a>
       
       <div class="meta">Fri, Jul 31 · 7:00 PM · 8009 Beverly Blvd, Los Angeles, CA 90048 · 11.1 km away <span class="cat">partiful</span></div>
@@ -1654,7 +1663,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/JdifOOfpLUYyAsA104gw" target="_blank">🎉 PRETTY ON THE INSIDE</a>
       
       <div class="meta">Sun, Aug 9 · 6:00 PM · 7811 Melrose Ave, Los Angeles, CA 90046 · 11.1 km away <span class="cat">partiful</span></div>
@@ -1662,7 +1671,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/DJ7J7PG6qXd0eXTVl0WF" target="_blank">🎉 Slow Drip 007</a>
       
       <div class="meta">Sun, Jul 26 · 11:00 AM · 3339 Wilshire Blvd, Los Angeles, CA 90010 · 13.4 km away <span class="cat">partiful</span></div>
@@ -1670,7 +1679,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/lKas0f1ZtCuCuvfSly21" target="_blank">🎉 CLUB MUSE</a>
       
       <div class="meta">Sun, Jul 26 · 5:00 PM · 1652 N Cherokee Ave, Hollywood, CA 90028 · 14.5 km away <span class="cat">partiful</span></div>
@@ -1678,7 +1687,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/F6AqfWkZnWaK1UqvDMKr" target="_blank">🎉 party • pillbox</a>
       
       <div class="meta">Sat, Jul 25 · 8:00 PM · 5632 Santa Monica Blvd, Los Angeles, CA 90038 · 14.8 km away <span class="cat">partiful</span></div>
@@ -1686,7 +1695,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/FwzYYC9TIR9myctzG4Bk" target="_blank">🎉 Strawflower, Doom Well, and Griffith Park Satellites @ Gold-Diggers</a>
       
       <div class="meta">Thu, Jul 30 · 7:00 PM · 5632 Santa Monica Blvd, Los Angeles, CA 90038 · 14.8 km away <span class="cat">partiful</span></div>
@@ -1694,7 +1703,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #4c5b6b;">
+    <div class="event hl-mid" data-band="late-night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/AwUeSi8XaSVrQt1qc7yt" target="_blank">🎉 ArtHouse Vol. 11</a>
       
       <div class="meta">Sat, Aug 29 · 9:00 PM · 1625 S Los Angeles St, Los Angeles, CA 90015 · 15.5 km away <span class="cat">partiful</span></div>
@@ -1702,7 +1711,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #4c5b6b;">
+    <div class="event hl-mid" data-band="late-night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/4Zxd8lzpsFGpT9pH8WzG" target="_blank">🎉 PERREO CON CARDO at Somewhere Special</a>
       
       <div class="meta">Sat, Aug 8 · 9:00 PM · 929 S Broadway, Los Angeles, CA 90015 · 15.8 km away <span class="cat">partiful</span></div>
@@ -1710,7 +1719,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/byJ3eanovXC7X7PKq9dV" target="_blank">🎉 AS IF Sunday Swim 7/26</a>
       
       <div class="meta">Sun, Jul 26 · 1:00 PM · 4141 Santa Monica Blvd, Los Angeles, CA 90029 · 16.9 km away <span class="cat">partiful</span></div>
@@ -1718,7 +1727,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/v4rSSrixlVdZc3RsW0Kt" target="_blank">🎉 JIJI&#x27;s JAZZ CLUB ★ OPEN JAM &amp; ARTIST MARKET</a>
       
       <div class="meta">Wed, Jul 29 · 7:00 PM · 4212 W Sunset Blvd, Los Angeles, CA 90029 · 16.9 km away <span class="cat">partiful</span></div>
@@ -1726,7 +1735,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/DIqUH3ub0OsvAuisEmk3" target="_blank">🎉 Chit &amp; Chat</a>
       
       <div class="meta">Sun, Jul 26 · 12:00 PM · 4800 Hollywood Blvd, Los Angeles, CA 90027 · 16.9 km away <span class="cat">partiful</span></div>
@@ -1734,7 +1743,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/kKQWtHSOOgOWv81t5Ezh" target="_blank">🎉 sip {tea} &amp; shop {vintage}</a>
       
       <div class="meta">Sun, Jul 26 · 11:00 AM · 1515 W Sunset Blvd, Los Angeles, CA 90026 · 17.7 km away <span class="cat">partiful</span></div>
@@ -1742,7 +1751,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/bGDWNhBN8OTbCgqm5FDX" target="_blank">🎉 PARADISO: Blackbough ’s LA Warehouse Sale</a>
       
       <div class="meta">Sat, Jul 25 · 9:00 AM · 2448 E 8th St, Los Angeles, CA 90021 · 18.2 km away <span class="cat">partiful</span></div>
@@ -1750,7 +1759,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/vxg1XEkr2gFzJicXJUc8" target="_blank">🎉 Fruitcake - A Queer Day Party</a>
       
       <div class="meta">Sat, Aug 1 · 2:00 PM · 3715 Evans St, Silverlake, CA 90027 · 19.0 km away <span class="cat">partiful</span></div>
@@ -1758,7 +1767,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/xt5HVXEoE676FdLh8CIx" target="_blank">🎉 Chinatown Book Club: Aug Meetup</a>
       
       <div class="meta">Sun, Aug 23 · 11:00 AM · 1245 N Spring St, Los Angeles, CA 90012 · 19.6 km away <span class="cat">partiful</span></div>
@@ -1766,7 +1775,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/BiS8KxZSyE8uQJL0AJBl" target="_blank">🎉 LAIDREY x VAN LEEUWEN - Pop Up</a>
       
       <div class="meta">Sun, Aug 2 · 11:00 AM · 18600 Ventura Blvd, Tarzana, CA 91356 · 22.3 km away <span class="cat">partiful</span></div>
@@ -1774,7 +1783,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/HqSa1qL5stV37RpGMDKu" target="_blank">🎉 BALD MEETUP LA</a>
       
       <div class="meta">Sat, Aug 8 · 5:00 PM · 215 N Brand Blvd, Glendale, CA 91203 · 22.8 km away <span class="cat">partiful</span></div>
@@ -1782,7 +1791,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/Fk9Q8xniGEGLCLYccj6a" target="_blank">🎉 Weez Fest</a>
       
       <div class="meta">Sat, Oct 3 · 5:00 PM · 6316 York Blvd, Los Angeles, CA 90042 · 25.8 km away <span class="cat">partiful</span></div>
@@ -1790,7 +1799,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/DNm1sziUmRSsj92mmHva" target="_blank">🎉 Summer School 4: Concert Photography with Boston Schulz</a>
       
       <div class="meta">Sat, Jul 25 · 4:00 PM · 1759 E Colorado Blvd, Pasadena, CA 91106 · 33.6 km away <span class="cat">partiful</span></div>
@@ -1798,7 +1807,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/RXv9qst07k55o2si5Vcu" target="_blank">🎉 😻Pilates &amp; Purrs💕</a>
       
       <div class="meta">Sat, Jul 25 · 6:00 PM · 5555 E Stearns St, Long Beach, CA 90815 · 35.4 km away <span class="cat">partiful</span></div>
@@ -1806,7 +1815,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/PTNmdx8mgIWqOWhDFpJO" target="_blank">🎉 Patchwork Show Long Beach</a>
       
       <div class="meta">Sat, Nov 28 · 11:00 AM · 490 Bay Shore Ave, Long Beach, CA 90803 · 37.6 km away <span class="cat">partiful</span></div>
@@ -1814,7 +1823,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/MNYeSLKYnwdhUEo0p7Wp" target="_blank">🎉 Craft Cafe</a>
       
       <div class="meta">Sat, Jul 25 · 2:00 PM · 12460 Euclid St, Garden Grove, CA 92840 · 50.6 km away <span class="cat">partiful</span></div>
@@ -1822,7 +1831,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/elAvGS2jr4lacaPBag9g" target="_blank">🎉 Poetry in the Park!</a>
       
       <div class="meta">Sun, Aug 2 · 4:00 PM · 1425 Summitridge Dr, Diamond Bar, CA 91765 · 57.4 km away <span class="cat">partiful</span></div>
@@ -1830,7 +1839,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #4c5b6b;">
+    <div class="event " data-band="late-night" style="border-left-color: #4c5b6b;">
       <a href="https://partiful.com/e/UcSzymmD1w5qW1NsblMw" target="_blank">🎉 Recession Indicator</a>
       
       <div class="meta">Fri, Jul 31 · 9:00 PM · 891 Baker St, Unit A10, Costa Mesa, CA 92626 · 60.4 km away <span class="cat">partiful</span></div>
@@ -1838,7 +1847,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/K3KB5BLOJ69gC6DANJ0O" target="_blank">🎉 BYO CRAFT CLUB</a>
       
       <div class="meta">Fri, Sep 25 · 7:00 PM · 1315 Research Dr, Redlands, CA 92374 · 109.3 km away <span class="cat">partiful</span></div>
@@ -1846,7 +1855,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/yiRPtj61yeq4M52IZmpq" target="_blank">🎉 South Asian Pop-Up Cafe</a>
       
       <div class="meta">Sat, Jul 25 · 10:00 AM · 8863 Venice Blvd., Los Angeles, CA 90034 <span class="cat">partiful</span></div>
@@ -1854,7 +1863,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/7v8MGzvtLSYVVO24Sh5Y" target="_blank">🎉 Noods in the Park</a>
       
       <div class="meta">Sat, Jul 25 · 12:00 PM · Elysian Park, Los Angeles, CA <span class="cat">partiful</span></div>
@@ -1862,7 +1871,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/E8srWUNEu9yidBBxIEws" target="_blank">🎉 Tualmi Outdoors Launch Party</a>
       
       <div class="meta">Thu, Jul 30 · 6:00 PM · Los Angeles, CA <span class="cat">partiful</span></div>
@@ -1870,7 +1879,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/wQNZLB7tm9Y3OLQzh88Z" target="_blank">🎉 HEAVEN&#x27;SPOT LA: ANG&#x27;EL x BLK POP UP CLUB NIGHT 21+</a>
       
       <div class="meta">Sat, Aug 22 · 8:00 PM · Los Angeles, CA <span class="cat">partiful</span></div>
@@ -1878,7 +1887,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/3fXb8NoigxCSHMPsdvtD" target="_blank">🎉 Los Feliz Writers Fest 2026</a>
       
       <div class="meta">Wed, Aug 19 · 6:45 PM · Los Feliz, Los Angeles, CA <span class="cat">partiful</span></div>
@@ -1886,7 +1895,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://partiful.com/e/cqedKOCDyaZneDqf7Nu4" target="_blank">🎉 RÜFÜS DU SCULPT</a>
       
       <div class="meta">Sat, Aug 15 · 1:00 PM · Studio City, Los Angeles, CA <span class="cat">partiful</span></div>
@@ -1894,7 +1903,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://partiful.com/e/ePTZgaT2R3gMuFHDL5Re" target="_blank">🎉 cozy color club: evening hours 🌙</a>
       
       <div class="meta">Fri, Aug 28 · 7:00 PM · North Hollywood, Los Angeles, CA <span class="cat">partiful</span></div>
@@ -1902,7 +1911,7 @@ On the Rox</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://partiful.com/e/KrcwMjbY1BbTh9R2Cyr9" target="_blank">🎉 PILATES BY 
 THE PIER</a>
       
@@ -1912,7 +1921,7 @@ THE PIER</a>
     
 <h2>New on Sat, Jul 25 at 12:18 PM (100 events)</h2>
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/pva0ezky" target="_blank">✨ FoundHER &amp; FundHER Mid-Summer Dinner</a>
       
       <div class="meta">Thu, Aug 20 · 5:15 PM · Del Rey, Los Angeles, CA · 0.1 km away <span class="cat">tech</span></div>
@@ -1920,7 +1929,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/2nmvyrzd" target="_blank">✨ Los Angeles Women Founders Lunch FoundHER &amp; FundHER Monthly Founder Exchange</a>
       
       <div class="meta">Wed, Aug 19 · 11:00 AM · Culver - West, Los Angeles, CA · 0.5 km away <span class="cat">tech</span></div>
@@ -1928,7 +1937,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/60zozl9o" target="_blank">✨ Coffee: LA Founders &amp; Investors</a>
       
       <div class="meta">Fri, Aug 21 · 10:00 AM · Del Rey, Marina del Rey, CA · 1.9 km away <span class="cat">tech</span></div>
@@ -1936,7 +1945,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/s0qgwh1y" target="_blank">✨ ⚡ LA Tech Week Vibe Coding Camp : Build Fast. Ship Faster. Learn the Entire AI Dev Stack.</a>
       
       <div class="meta">Thu, Oct 15 · 10:00 AM · Playa Vista, Los Angeles, California · 2.1 km away <span class="cat">ai</span></div>
@@ -1944,7 +1953,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/40dh80ra" target="_blank">✨ Startup Pitch &amp; Networking in Los Angeles</a>
       
       <div class="meta">Wed, Aug 12 · 7:00 PM · Venice, Los Angeles, CA · 2.3 km away <span class="cat">tech</span></div>
@@ -1952,7 +1961,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/swee4uan" target="_blank">✨ Valin Summit</a>
       
       <div class="meta">Thu, Apr 15 · 8:30 AM · Park West, Culver City, CA · 2.5 km away <span class="cat">tech</span></div>
@@ -1960,7 +1969,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
+    <div class="event hl-near standout" data-band="evening" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/avw5a3y9" target="_blank">✨ LA Agentic AI Meetup hosted by Pinecone</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Tue, Aug 11 · 5:00 PM · Gulp Restaurant &amp; Brew Co, 13020 Pacific Promenade #1, Los Angeles, CA 90094, USA · 2.5 km away <span class="cat">ai</span></div>
@@ -1968,7 +1977,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/yz800lff" target="_blank">✨ Thought Leadership Dinner &quot;Human Expertise Meets Procurement Intelligence&quot;</a>
       
       <div class="meta">Thu, Aug 6 · 6:30 PM · Venice, Los Angeles, CA · 2.6 km away <span class="cat">tech</span></div>
@@ -1976,7 +1985,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
+    <div class="event hl-near standout" data-band="morning" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/8y7t6ykg" target="_blank">✨ 🌟 HEY, SUNSHINE KITCHEN THREE YEAR ANNIVERSARY PARTY! 🌟</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Sun, Aug 2 · 11:00 AM · Hey, Sunshine Kitchen, 3863 Overland Ave, Culver City, CA 90232, USA · 2.8 km away <span class="cat">food</span></div>
@@ -1984,7 +1993,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #c49a55;">
+    <div class="event hl-near" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/55gud6u8" target="_blank">✨ AI Security Meetup (AWS &amp; TrackIt)</a>
       
       <div class="meta">Thu, Sep 24 · 3:00 PM · Del Rey Yacht Club, 13900 Palawan Way #12, Marina Del Rey, CA 90292, USA · 2.9 km away <span class="cat">ai</span></div>
@@ -1992,7 +2001,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
+    <div class="event hl-near standout" data-band="afternoon" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/DemoDayLAAug" target="_blank">✨ Demo Day LA - August 2026</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Thu, Aug 13 · 4:30 PM · BLANKSPACES Venice, 606 Venice Blvd., Venice, CA 90291, USA · 3.6 km away <span class="cat">tech</span></div>
@@ -2000,7 +2009,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #c49a55;">
+    <div class="event hl-near" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/brandpopup-sept17" target="_blank">✨ BRAND POPUP /again</a>
       
       <div class="meta">Thu, Sep 17 · 4:00 PM · BLANKSPACES Venice, 606 Venice Blvd., Venice, CA 90291, USA · 3.6 km away <span class="cat">tech</span></div>
@@ -2008,7 +2017,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/3mgi8r5r" target="_blank">✨ Build Your Human Advantage in the Age of AI</a>
       
       <div class="meta">Tue, Jul 28 · 6:00 PM · The Culver Hotel, 9400 Culver Blvd, Culver City, CA 90232, USA · 4.1 km away <span class="cat">ai</span></div>
@@ -2016,7 +2025,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/women-p2pl" target="_blank">✨ From Zero to Auto: A Hands-On AI Automation Workshop for Women + Nonbinary Leaders 🤖⚡</a>
       
       <div class="meta">Sat, Jul 25 · 10:00 AM · 150 Horizon Ave, Venice, CA 90291, USA · 4.6 km away <span class="cat">ai</span></div>
@@ -2024,7 +2033,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/audos-zjeb" target="_blank">✨ Cafe Audos Los Angeles - go from an idea to business with unlimited building credits in &lt;1hr</a>
       
       <div class="meta">Wed, Jul 29 · 11:00 AM · The KINN, 150 Horizon Ave, Venice, CA 90291, USA · 4.6 km away <span class="cat">ai</span></div>
@@ -2032,7 +2041,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/TheNatureOfNurture" target="_blank">✨ The Nature Of Nurture Podcast LIVE: Leading With Intention In The Digital Age</a>
       
       <div class="meta">Thu, Jul 30 · 6:00 PM · The KINN, 150 Horizon Ave, Venice, CA 90291, USA · 4.6 km away <span class="cat">ai</span></div>
@@ -2040,7 +2049,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/StartupCafeAug5" target="_blank">✨ Startup Cafe: H5E Founders with Ilya Pozin (Pluto TV, $340M Exit)</a>
       
       <div class="meta">Wed, Aug 5 · 8:45 AM · The KINN, 150 Horizon Ave, Venice, CA 90291, USA · 4.6 km away <span class="cat">tech</span></div>
@@ -2048,7 +2057,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #c49a55;">
+    <div class="event hl-near" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/KinnEntrepreneurshipCouncilAug27" target="_blank">✨ Kinn Entrepreneurship Council</a>
       
       <div class="meta">Thu, Aug 27 · 1:30 PM · The KINN, 150 Horizon Ave, Venice, CA 90291, USA · 4.6 km away <span class="cat">tech</span></div>
@@ -2056,7 +2065,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/hssummit26" target="_blank">✨ Healthspan Summit - 2026</a>
       
       <div class="meta">Fri, Oct 2 · 9:00 AM · Above The Block, 11301 W Olympic Blvd, Los Angeles, CA 90064, USA · 5.1 km away <span class="cat">tech</span></div>
@@ -2064,7 +2073,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/ssa8jmpt" target="_blank">✨ StartupExperts LA - Happy Hour and Speed Networking</a>
       
       <div class="meta">Wed, Jul 29 · 5:30 PM · Father&#x27;s Office, 3229 Helms Ave, Los Angeles, CA 90034, USA · 5.3 km away <span class="cat">tech</span></div>
@@ -2072,7 +2081,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/lxsto3q0" target="_blank">✨ Amazon Quick User Group - Los Angeles Area (Santa Monica)</a>
       
       <div class="meta">Wed, Sep 16 · 11:00 AM · 2450 Colorado Ave suite 1010w, Santa Monica, CA 90404, USA · 5.9 km away <span class="cat">ai</span></div>
@@ -2080,7 +2089,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/worldcup" target="_blank">✨ PITCHFEST | Startup World Cup | LA Regional #PHFEST26</a>
       
       <div class="meta">Thu, Oct 1 · 5:00 PM · Mid-City, Santa Monica, California · 5.9 km away <span class="cat">tech</span></div>
@@ -2088,7 +2097,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/z8s02c49" target="_blank">✨ LA Women Social &amp; Tech Coffee | ~ Santa Monica ~</a>
       
       <div class="meta">Sun, Aug 2 · 10:30 AM · Mid-City, Santa Monica, California · 6.2 km away <span class="cat">tech</span></div>
@@ -2096,7 +2105,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/LAGrindClubCoffee7" target="_blank">✨ Members Coffee Meetup - Santa Monica</a>
       
       <div class="meta">Wed, Jul 29 · 8:00 AM · Mid-City, Santa Monica, California · 6.6 km away <span class="cat">tech</span></div>
@@ -2104,7 +2113,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/LAGrindMixerAug" target="_blank">✨ The LA Grind: Startup Community Mixer</a>
       
       <div class="meta">Tue, Aug 11 · 6:00 PM · Downtown, Santa Monica, California · 6.7 km away <span class="cat">tech</span></div>
@@ -2112,7 +2121,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
+    <div class="event hl-near standout" data-band="evening" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/hbx8dqlh" target="_blank">✨ Product.ai Golden Hour 006</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Wed, Aug 5 · 5:00 PM · Product.ai, 12100 Wilshire Blvd #950, Los Angeles, CA 90025, USA · 6.8 km away <span class="cat">tech</span></div>
@@ -2120,7 +2129,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/6pj3kjbc" target="_blank">✨ AI in a DevOps World / Introducing MarkDown Context Protocol (MDCP)</a>
       
       <div class="meta">Thu, Jul 30 · 6:00 PM · O&#x27;Briens Irish Pub, 2226 Wilshire Blvd, Santa Monica, CA 90403, USA · 6.8 km away <span class="cat">ai</span></div>
@@ -2128,7 +2137,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
+    <div class="event hl-near standout" data-band="evening" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/ConsoleLA" target="_blank">✨ IT and SecOps Happy Hour Santa Monica</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Thu, Jul 30 · 5:30 PM · The Surfing Fox, 120 Colorado Ave, Santa Monica, CA 90401, USA · 6.8 km away <span class="cat">ai</span></div>
@@ -2136,7 +2145,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/ambition2026" target="_blank">✨ Ambition 2026: A Curated Startup Summit</a>
       
       <div class="meta">Thu, Sep 24 · 9:00 AM · Downtown, Santa Monica, CA · 7.2 km away <span class="cat">tech</span></div>
@@ -2144,7 +2153,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/nqps8q14" target="_blank">✨ INFINITE WELLNESS MASTERCLASSES II : The Longevity Experience &amp; The Official Ceremony Of The &quot;Top 100 Voices Of 2026&quot;</a>
       
       <div class="meta">Sat, Sep 26 · 10:00 AM · 2080 Century Pk E, Los Angeles, CA 90067, USA · 7.2 km away <span class="cat">ai</span></div>
@@ -2152,7 +2161,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #6f95b3;">
+    <div class="event hl-near" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/LAGrindPolsinelliCoWorking3" target="_blank">✨ The LA Grind: Founder Co-Working &amp; Free Lunch w/ Polsinelli</a>
       
       <div class="meta">Tue, Jul 28 · 10:00 AM · Century City, Los Angeles, California · 7.3 km away <span class="cat">tech</span></div>
@@ -2160,7 +2169,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/g481dtth" target="_blank">✨ StartEngine Private: Bordeaux Dinner - $3000 Value</a>
       
       <div class="meta">Sat, Aug 8 · 6:00 PM · STK Steakhouse, 1100 Glendon Ave, Los Angeles, CA 90024, USA · 7.5 km away <span class="cat">food</span></div>
@@ -2168,7 +2177,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-near" style="border-left-color: #8f6f9e;">
+    <div class="event hl-near" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/rq4c0ei6" target="_blank">✨ TikTok Shop Experts: A Roundtable Dinner with OverCast Digital and Amazon MCF</a>
       
       <div class="meta">Wed, Aug 5 · 7:00 PM · Huntley Hotel Santa Monica Beach, 1111 2nd St, Santa Monica, CA 90401, USA · 7.7 km away <span class="cat">tech</span></div>
@@ -2176,7 +2185,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/2cx66eid" target="_blank">✨ Sunset Circle</a>
       
       <div class="meta">Thu, Aug 20 · 6:00 PM · Arc Beverly, 9800 Wilshire Blvd, Beverly Hills, CA 90212, USA · 8.1 km away <span class="cat">tech</span></div>
@@ -2184,7 +2193,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/h239sht3" target="_blank">✨ Founders Running Club :: LA</a>
       
       <div class="meta">Sat, Aug 1 · 7:00 AM · Primo Passo Coffee Co, 702 Montana Ave, Santa Monica, CA 90403, USA · 8.1 km away <span class="cat">tech</span></div>
@@ -2192,7 +2201,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/4oapssif" target="_blank">✨ G-Rex Grant Tour Los Angeles</a>
       
       <div class="meta">Thu, Aug 20 · 10:00 AM · CNSI/UCLA, 570 Westwood Plaza, Los Angeles, CA 90095, USA · 8.3 km away <span class="cat">tech</span></div>
@@ -2200,7 +2209,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/vhb05d4d" target="_blank">✨ VCBrags: Hardtech, Defense &amp; Manufacturing Event</a>
       
       <div class="meta">Sat, Oct 10 · 3:00 PM · El Segundo, CA · 8.4 km away <span class="cat">tech</span></div>
@@ -2208,7 +2217,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/aerospace-aug26" target="_blank">✨ Aerospace Meetup – August</a>
       
       <div class="meta">Thu, Aug 13 · 6:00 PM · Rock &amp; Brews, 143 Main St, El Segundo, CA 90245, USA · 8.6 km away <span class="cat">tech</span></div>
@@ -2216,7 +2225,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/ay68dfpm" target="_blank">✨ Pitch &amp; Run LA: Run Club for Founders, Investors, and Tech</a>
       
       <div class="meta">Thu, Jul 30 · 7:00 AM · Beverly Hills Garden Park, 9439 Santa Monica Blvd, Beverly Hills, CA 90210, USA · 8.8 km away <span class="cat">tech</span></div>
@@ -2224,7 +2233,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/ojp0vbqe" target="_blank">✨ 2006 Summer Session #6: Growth/HR Policies. 1:1 Office Hours with Ed Chan</a>
       
       <div class="meta">Wed, Jul 29 · 10:00 AM · UCLA Anderson School of Management, 110 Westwood Plaza, Los Angeles, CA 90095, USA · 9.0 km away <span class="cat">tech</span></div>
@@ -2232,7 +2241,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/pywvj9ag" target="_blank">✨ Open Workshop @ Silicon Beach Maker Space</a>
       
       <div class="meta">Sat, Jul 25 · 12:00 PM · Jefferson Park, Los Angeles, CA · 9.3 km away <span class="cat">tech</span></div>
@@ -2240,7 +2249,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/haps-club-the-long-table" target="_blank">✨ Haps Club x The Long Table Dinner Series</a>
       
       <div class="meta">Sat, Jul 25 · 6:00 PM · Chesterfield Square, Los Angeles, CA · 9.9 km away <span class="cat">food</span></div>
@@ -2248,7 +2257,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/ngwv9b3r" target="_blank">✨ SoCal Deep Tech Symposium 2026</a>
       
       <div class="meta">Thu, Sep 24 · 1:00 PM · El Segundo, California · 10.6 km away <span class="cat">tech</span></div>
@@ -2256,7 +2265,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/startout-aila-hh-july2026" target="_blank">✨ StartOut x AI LA Happy Hour</a>
       
       <div class="meta">Thu, Jul 30 · 6:00 PM · GYM Bar WeHo, 8919 Santa Monica Blvd, West Hollywood, CA 90069, USA · 10.6 km away <span class="cat">ai</span></div>
@@ -2264,7 +2273,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/fjfain9u" target="_blank">✨ Launchpad Session (In-Person)</a>
       
       <div class="meta">Thu, Aug 6 · 1:30 PM · 777 S Aviation Blvd, El Segundo, CA 90245, USA · 10.7 km away <span class="cat">tech</span></div>
@@ -2272,7 +2281,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/9k1m5rxn" target="_blank">✨ 2026 Space Contracting Executive Forum</a>
       
       <div class="meta">Thu, Aug 27 · 8:30 AM · 777 S Aviation Blvd ste 210, El Segundo, CA 90245, USA · 10.7 km away <span class="cat">tech</span></div>
@@ -2280,7 +2289,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/x80j119w" target="_blank">✨ MediaTech After Dark: BUILDERS NIGHT AT THE GALLERY</a>
       
       <div class="meta">Wed, Jul 29 · 6:00 PM · Central LA, Los Angeles, CA · 10.8 km away <span class="cat">tech</span></div>
@@ -2288,7 +2297,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/fuq4ss42" target="_blank">✨ Light DAO x VOMO: Find Your Voice with Chris Pan (LA)</a>
       
       <div class="meta">Sun, Aug 9 · 3:00 PM · Beverly Crest, Beverly Hills, California · 10.9 km away <span class="cat">tech</span></div>
@@ -2296,7 +2305,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/7ooaqofa" target="_blank">✨ VIP Lounge at State Social House</a>
       
       <div class="meta">Thu, Jul 30 · 7:00 PM · Sunset Strip, West Hollywood, CA · 11.1 km away <span class="cat">tech</span></div>
@@ -2304,7 +2313,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/oneday-g83t" target="_blank">✨ LA Founder Coworking Session + Social Hour with Special Guest Greg Monterrosa</a>
       
       <div class="meta">Thu, Jul 30 · 5:00 PM · 1 Hotel West Hollywood, 8490 Sunset Blvd, West Hollywood, CA 90069, USA · 11.8 km away <span class="cat">tech</span></div>
@@ -2312,7 +2321,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
+    <div class="event hl-mid standout" data-band="evening" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/zf4icuij" target="_blank">✨ after hours: a happy hour for la&#x27;s creatives and founders</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Tue, Jul 28 · 5:30 PM · Tu Madre - West Hollywood, 1111 Hayworth Ave, Los Angeles, CA 90046, USA · 12.0 km away <span class="cat">tech</span></div>
@@ -2320,7 +2329,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/pyqvhcf5" target="_blank">✨ New Money: LA Dinner</a>
       
       <div class="meta">Mon, Jul 27 · 6:30 PM · Central LA, West Hollywood, CA · 12.0 km away <span class="cat">tech</span></div>
@@ -2328,7 +2337,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/LAGrindGameNight" target="_blank">✨ The LA Grind: Game Night</a>
       
       <div class="meta">Fri, Aug 7 · 7:00 PM · Melrose, Los Angeles, California · 12.5 km away <span class="cat">tech</span></div>
@@ -2336,7 +2345,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/hwk0jh3u" target="_blank">✨ Founders Table: Sip Scale Strategize</a>
       
       <div class="meta">Sat, Jul 25 · 11:00 AM · Hollywood, Los Angeles, CA · 14.4 km away <span class="cat">tech</span></div>
@@ -2344,7 +2353,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/rff8nrrj" target="_blank">✨ Musly Los Angeles Launch Dinner | Founding Members Dinner | August 13th</a>
       
       <div class="meta">Thu, Aug 13 · 7:00 PM · Flavors from Afar, 5652 Hollywood Blvd, Hollywood, CA 90028, USA · 15.6 km away <span class="cat">tech</span></div>
@@ -2352,7 +2361,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/ai-visual-journalism-forum-2026" target="_blank">✨ AI x Visual Journalism Forum</a>
       
       <div class="meta">Tue, Aug 25 · 6:00 PM · Downtown Los Angeles, Los Angeles, CA · 15.7 km away <span class="cat">ai</span></div>
@@ -2360,7 +2369,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/lavision" target="_blank">✨ LA Vision: Get seen.</a>
       
       <div class="meta">Thu, Aug 27 · 7:00 PM · Native Son LA, 832 S Olive St, Los Angeles, CA 90014, USA · 16.2 km away <span class="cat">tech</span></div>
@@ -2368,7 +2377,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/6xuvytne" target="_blank">✨ Ecom North | LA Summit</a>
       
       <div class="meta">Thu, Sep 17 · 9:00 AM · City Market Social House, 1145 San Pedro St, Los Angeles, CA 90015, USA · 16.2 km away <span class="cat">ai</span></div>
@@ -2376,7 +2385,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/2026-kocca-launchpad-LA" target="_blank">✨ [KOCCA] Launchpad in Los Angeles DEMO DAY</a>
       
       <div class="meta">Wed, Aug 5 · 2:30 PM · Sheraton Grand Los Angeles, 711 S Hope St, Los Angeles, CA 90017, USA · 16.2 km away <span class="cat">tech</span></div>
@@ -2384,7 +2393,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/eyshvgfv" target="_blank">✨ Sandbox Summer Bar Crawl 2026</a>
       
       <div class="meta">Sat, Jul 25 · 1:00 PM · 531 N Pacific Coast Hwy, Redondo Beach, CA 90277, USA · 16.4 km away <span class="cat">food</span></div>
@@ -2392,7 +2401,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #6f95b3;">
+    <div class="event hl-mid" data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/cnyoi03w" target="_blank">✨ Grid110: Coffee, Community &amp; Co-Working</a>
       
       <div class="meta">Thu, Jul 30 · 9:00 AM · Hilltop Coffee + Kitchen - DTLA, 718 S Hill St Ste 100, Los Angeles, CA 90014, USA · 16.4 km away <span class="cat">tech</span></div>
@@ -2400,7 +2409,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/09ycboux" target="_blank">✨ Vertical Drama Salon</a>
       
       <div class="meta">Thu, Jul 30 · 6:30 PM · 160 Glendale Blvd, Los Angeles, CA 90026, USA · 16.8 km away <span class="cat">ai</span></div>
@@ -2408,7 +2417,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/mdwd8qen" target="_blank">✨ No sweat: hot wings &amp; lassi at Pijja Palace powered by sunday</a>
       
       <div class="meta">Wed, Aug 12 · 6:00 PM · Pijja Palace, 2711 Sunset Blvd, Los Angeles, CA 90026, USA · 17.0 km away <span class="cat">food</span></div>
@@ -2416,7 +2425,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
+    <div class="event hl-mid standout" data-band="evening" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/ttiirfes" target="_blank">✨ Festa Della Domenica</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Sun, Jul 26 · 5:30 PM · 1606 Sunset Blvd, Los Angeles, CA 90026, USA · 17.7 km away <span class="cat">food</span></div>
@@ -2424,7 +2433,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/6hf5qayb" target="_blank">✨ (TENTATIVE) Founder Friends LA</a>
       
       <div class="meta">Mon, Oct 12 · 6:00 PM · Los Angeles, California · 17.8 km away <span class="cat">tech</span></div>
@@ -2432,7 +2441,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/zgvaxwx2" target="_blank">✨ Cyberdeck Workshop (LA)</a>
       
       <div class="meta">Sun, Aug 23 · 3:00 PM · Downtown Los Angeles, Los Angeles, CA · 18.2 km away <span class="cat">tech</span></div>
@@ -2440,7 +2449,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/accmjxwm" target="_blank">✨ Wax &amp; Burgundy</a>
       
       <div class="meta">Sat, Jul 25 · 6:30 PM · Vendome Wines &amp; Spirits, 10600 Riverside Dr, North Hollywood, CA 91602, USA · 18.3 km away <span class="cat">food</span></div>
@@ -2448,7 +2457,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #c49a55;">
+    <div class="event hl-mid" data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/mdhb9xdq" target="_blank">✨ Silky&#x27;s Southern Comfort</a>
       
       <div class="meta">Sat, Jul 25 · 12:00 PM · Los Feliz, Los Angeles, CA · 18.4 km away <span class="cat">food</span></div>
@@ -2456,7 +2465,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/e0gtr88d" target="_blank">✨ AI in Valley Happy Hour Meet Up</a>
       
       <div class="meta">Wed, Aug 12 · 5:00 PM · Idle Hour, 4824 Vineland Ave, North Hollywood, CA 91601, USA · 18.8 km away <span class="cat">ai</span></div>
@@ -2464,7 +2473,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/l55ncju5" target="_blank">✨ Founders Basketball Los Angeles (August 2026)</a>
       
       <div class="meta">Wed, Aug 19 · 7:30 PM · Central LA, Los Angeles, CA · 18.9 km away <span class="cat">tech</span></div>
@@ -2472,7 +2481,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event hl-mid" style="border-left-color: #8f6f9e;">
+    <div class="event hl-mid" data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/4lalh9u0" target="_blank">✨ Cafe Maghreb Supper Club</a>
       
       <div class="meta">Tue, Aug 25 · 6:00 PM · Atwater Village, Los Angeles, CA 90039, USA · 20.0 km away <span class="cat">food</span></div>
@@ -2480,7 +2489,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
+    <div class="event standout" data-band="afternoon" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/f5mqxrz7" target="_blank">✨ Assembly Launch Party</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Sat, Aug 8 · 4:30 PM · Fuser, 1811 Blake Ave, Los Angeles, CA 90039, USA · 20.1 km away <span class="cat">tech</span></div>
@@ -2488,7 +2497,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/0c508dlp" target="_blank">✨ Character Pilot Pitch Contest (w/ cash prize)</a>
       
       <div class="meta">Wed, Aug 5 · 5:00 PM · Northeast Los Angeles, Los Angeles, CA · 20.9 km away <span class="cat">ai</span></div>
@@ -2496,7 +2505,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/g1q2pz3q" target="_blank">✨ Venture Building Program | Demo Day</a>
       
       <div class="meta">Thu, Sep 24 · 6:30 PM · Hero House @ HyeRise, 326 Mira Loma Ave, Glendale, CA 91204, USA · 21.0 km away <span class="cat">ai</span></div>
@@ -2504,7 +2513,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/mjnn2n8f" target="_blank">✨ Free Non-Alcoholic Gin Tasting with Empress 1908</a>
       
       <div class="meta">Sat, Jul 25 · 1:00 PM · Burden of Proof, 1012 Mission St, South Pasadena, CA 91030, USA · 28.0 km away <span class="cat">food</span></div>
@@ -2512,7 +2521,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/jbefx3s9" target="_blank">✨ LA Social &amp; Tech Meetup | ~ Pasadena ~</a>
       
       <div class="meta">Sat, Aug 1 · 6:00 PM · South Arroyo, Pasadena, CA · 29.6 km away <span class="cat">tech</span></div>
@@ -2520,7 +2529,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/agp1h2b6" target="_blank">✨ Women of SaaS Los Angeles – Networking Mixer | Pasadena</a>
       
       <div class="meta">Tue, Jul 28 · 6:30 PM · PlayLab Beauty, 25 N Fair Oaks Ave, Pasadena, CA 91103, USA · 30.2 km away <span class="cat">tech</span></div>
@@ -2528,7 +2537,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/23xkb0nx" target="_blank">✨ Pasadena Climate Happy Hour</a>
       
       <div class="meta">Thu, Jul 30 · 6:00 PM · Chak De California, 98 E Colorado Blvd, Pasadena, CA 91105, USA · 30.3 km away <span class="cat">tech</span></div>
@@ -2536,7 +2545,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/b6dndxxa" target="_blank">✨ Claude Users Group Meetup (Unofficial)</a>
       
       <div class="meta">Wed, Aug 19 · 7:00 PM · FoundrSpace Coworking, 87 N Raymond Ave, Pasadena, CA 91103, USA · 30.4 km away <span class="cat">ai</span></div>
@@ -2544,7 +2553,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/zuhgjsew" target="_blank">✨ Pasadena Tech Happy Hour</a>
       
       <div class="meta">Thu, Aug 20 · 6:00 PM · Hawg Heaven BBQ &amp; Gastro Pub, 119 E Colorado Blvd, Pasadena, CA 91105, USA · 30.4 km away <span class="cat">tech</span></div>
@@ -2552,7 +2561,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/3hh6fre0" target="_blank">✨ Executive Supper Club in East LA featuring Amanda Ma</a>
       
       <div class="meta">Wed, Sep 23 · 6:30 PM · Old Pasadena, Pasadena, California · 30.4 km away <span class="cat">food</span></div>
@@ -2560,7 +2569,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/wvl5kear" target="_blank">✨ Pacific Foundry: Climate Techies Networking Event at Ampaire - Q3 2026</a>
       
       <div class="meta">Thu, Aug 13 · 4:30 PM · Ampaire, Inc., 4301 Donald Douglas Dr, Long Beach, CA 90808, USA · 32.3 km away <span class="cat">tech</span></div>
@@ -2568,7 +2577,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/jbjihwxs" target="_blank">✨ Sharpen Your Product Idea with Gemini Workshop hosted by DTLB Alliance</a>
       
       <div class="meta">Tue, Jul 28 · 11:00 AM · Downtown Long Beach Alliance (DTLB Alliance), 100 W Broadway #235, Long Beach, CA 90802, USA · 32.9 km away <span class="cat">ai</span></div>
@@ -2576,7 +2585,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/mqi085tp" target="_blank">✨ In-N-Out Friends Club x Lambda Phi Epsilon Alumni</a>
       
       <div class="meta">Sat, Aug 8 · 11:00 AM · 13850 Francisquito Ave, Baldwin Park, CA 91706, USA · 42.2 km away <span class="cat">food</span></div>
@@ -2584,7 +2593,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/s8zlqgqp" target="_blank">✨ In-N-Out Friends Club x Andy Nguyen</a>
       
       <div class="meta">Sun, Oct 4 · 11:00 AM · 1168 S State College Blvd, Anaheim, CA 92805, USA · 53.0 km away <span class="cat">food</span></div>
@@ -2592,7 +2601,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/ljq9ugb6" target="_blank">✨ OC Techqueria July Meetup</a>
       
       <div class="meta">Thu, Jul 30 · 6:00 PM · Brewheim, 1931 E Wright Cir, Anaheim, CA 92806, USA · 53.4 km away <span class="cat">tech</span></div>
@@ -2600,7 +2609,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/egthwom6" target="_blank">✨ Retail Insiders Party at RetailClub</a>
       
       <div class="meta">Tue, Sep 22 · 7:00 PM · Pacific City, Huntington Beach, California · 54.8 km away <span class="cat">ai</span></div>
@@ -2608,7 +2617,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/p5hriqbg" target="_blank">✨ Founders Dinner: Omakase Experience</a>
       
       <div class="meta">Thu, Aug 6 · 6:30 PM · Kaigen, 1736 N Tustin St, Orange, CA 92865, USA · 57.6 km away <span class="cat">food</span><span class="cat">tech</span></div>
@@ -2616,7 +2625,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/heygen-tf1m" target="_blank">✨ Connect Locally, Create Globally: HeyGen AI for Creators, Brands &amp; Entrepreneurs</a>
       
       <div class="meta">Thu, Aug 6 · 11:30 AM · The Grill House, 1204 Foothill Blvd, La Verne, CA 91750, USA · 60.7 km away <span class="cat">ai</span></div>
@@ -2624,7 +2633,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/x8hev5ex" target="_blank">✨ Raising Capital, Scaling Your Business &amp; Protecting Your IP- Legal Strategy Forum</a>
       
       <div class="meta">Thu, Aug 6 · 6:00 PM · 2807 Villa Way, Newport Beach, CA 92663, USA · 62.3 km away <span class="cat">tech</span></div>
@@ -2632,7 +2641,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/ticket500-3ken" target="_blank">✨ Orange County AI Vibe Coding</a>
       
       <div class="meta">Wed, Jul 29 · 5:00 PM · 2807 Villa Way, Newport Beach, CA 92663, USA · 62.3 km away <span class="cat">ai</span></div>
@@ -2640,7 +2649,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/z3qkkwbg" target="_blank">✨ Technical Co-Founder Wanted</a>
       
       <div class="meta">Thu, Jul 30 · 6:00 PM · 2807 Villa Way, Newport Beach, CA 92663, USA · 62.3 km away <span class="cat">ai</span></div>
@@ -2648,7 +2657,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event standout" style="border-left-color: var(--standout-border); border-left-width: 5px;">
+    <div class="event standout" data-band="afternoon" style="border-left-color: var(--standout-border); border-left-width: 5px;">
       <a href="https://lu.ma/claude-k58w" target="_blank">✨ Orange County | Claude Code For Beginners</a>
       <span class="badge-standout">★ Featured</span>
       <div class="meta">Sat, Aug 1 · 1:00 PM · The Ticket 500, 2807 Villa Way, Newport Beach, CA 92663, USA · 62.3 km away <span class="cat">ai</span></div>
@@ -2656,7 +2665,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/ldmr1nrd" target="_blank">✨ Build a Website with AI</a>
       
       <div class="meta">Tue, Aug 11 · 6:00 PM · 2807 Villa Way, Newport Beach, CA 92663, USA · 62.3 km away <span class="cat">ai</span></div>
@@ -2664,7 +2673,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/cwa5jt3v" target="_blank">✨ Agent Anatomy: A Research Presentation</a>
       
       <div class="meta">Thu, Aug 20 · 6:00 PM · 2807 Villa Way, Newport Beach, CA 92663, USA · 62.3 km away <span class="cat">ai</span></div>
@@ -2672,7 +2681,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #6f95b3;">
+    <div class="event " data-band="morning" style="border-left-color: #6f95b3;">
       <a href="https://lu.ma/0prj6u1g" target="_blank">✨ Local Meetup in Irvine, CA!</a>
       
       <div class="meta">Thu, Aug 6 · 11:00 AM · Irvine Business Complex, Irvine, CA · 63.2 km away <span class="cat">tech</span></div>
@@ -2680,7 +2689,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/farmdinnerforacause" target="_blank">✨ Casa de la Familia Fundraiser</a>
       
       <div class="meta">Sat, Jul 25 · 5:00 PM · 7524 E Saddlehill Trail, Orange, CA 92869, USA · 63.7 km away <span class="cat">food</span></div>
@@ -2688,7 +2697,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/x7sp1c67" target="_blank">✨ ITN NewPort Beach Personal Branding &amp; Professional Growth Forum</a>
       
       <div class="meta">Sat, Aug 22 · 4:00 PM · OASIS Senior Citizen Center, 801 Narcissus Ave, Corona Del Mar, CA 92625, USA · 67.6 km away <span class="cat">tech</span></div>
@@ -2696,7 +2705,7 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #8f6f9e;">
+    <div class="event " data-band="evening" style="border-left-color: #8f6f9e;">
       <a href="https://lu.ma/hw3fs8wp" target="_blank">✨ AI in Production: The Agent Economy and High-Stakes AI Decisions</a>
       
       <div class="meta">Tue, Jul 28 · 6:00 PM · Las Lomas Community Park, 10 Federation Way, Irvine, CA 92603, USA · 68.2 km away <span class="cat">ai</span></div>
@@ -2704,12 +2713,20 @@ THE PIER</a>
     </div>
     
 
-    <div class="event " style="border-left-color: #c49a55;">
+    <div class="event " data-band="afternoon" style="border-left-color: #c49a55;">
       <a href="https://lu.ma/q4xcxo6s" target="_blank">✨ 领创未来-创始人计划LEA FUTURE FOUNDERS PROGRAM</a>
       
       <div class="meta">Sat, Aug 1 · 2:00 PM · 980 Roosevelt, Irvine, CA 92620, USA · 69.3 km away <span class="cat">tech</span></div>
       <div class="desc">【领创未来 · 创始人计划】第一期招募开启！ 这是一个面向 25岁以下群体 的公益免费创新创业训练营，希望让更多年轻人真正理解： 创业并不遥远 。它可以从一个想法、一次观察、一次尝试开始，也可以从发现身边的问题、提出解决方案开始。 本期训练营将由 2026福布斯北美30 Under 30入选青年企业家、领创商业联盟主席胡超 Charles Hu 主讲，带领学员学习如何从日常观察中发现创业机会，如何用轻资产的方式验证想法、落地项目，并逐步建立自己的商业思维。…</div>
     </div>
     
+<script>
+  document.querySelectorAll('.legend-items .chip[data-filter]').forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      chip.classList.toggle('off');
+      document.body.classList.toggle('hide-' + chip.dataset.filter, chip.classList.contains('off'));
+    });
+  });
+</script>
 </body>
 </html>
