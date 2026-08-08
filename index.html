@@ -20,6 +20,8 @@
     --standout-border: #c9ab6b;
     --standout-badge-bg: #f5ecd9;
     --standout-badge-ink: #7a5b1e;
+    --price-bg: #e2f0e2;
+    --price-ink: #2f6a34;
     --scrollbar-track: #e4e6e8;
   }
   @media (prefers-color-scheme: dark) {
@@ -37,6 +39,8 @@
       --standout-border: #8a734a;
       --standout-badge-bg: #332c1c;
       --standout-badge-ink: #e0c080;
+      --price-bg: #1f3320;
+      --price-ink: #86c98a;
       --scrollbar-track: #262c30;
     }
   }
@@ -45,6 +49,7 @@
     --link: #9fb9d9; --cat-bg: #232a2d; --hl-near-bg: #182a3d; --hl-near-border: #5487b8;
     --hl-mid-bg: #1a2126; --hl-mid-border: #3f4c58;
     --standout-border: #8a734a; --standout-badge-bg: #332c1c; --standout-badge-ink: #e0c080;
+    --price-bg: #1f3320; --price-ink: #86c98a;
     --scrollbar-track: #262c30;
   }
   :root[data-theme="light"] {
@@ -52,6 +57,7 @@
     --link: #3a5a82; --cat-bg: #f0f0f0; --hl-near-bg: #c9e0f5; --hl-near-border: #5f92c0;
     --hl-mid-bg: #eef4fa; --hl-mid-border: #b9cfe3;
     --standout-border: #c9ab6b; --standout-badge-bg: #f5ecd9; --standout-badge-ink: #7a5b1e;
+    --price-bg: #e2f0e2; --price-ink: #2f6a34;
     --scrollbar-track: #e4e6e8;
   }
   body { font-family: ui-rounded, 'Avenir Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; max-width: 2000px; margin: 24px auto; padding: 0 24px; color: var(--ink); background: var(--paper); }
@@ -87,6 +93,7 @@
   .meta { color: var(--ink-soft); font-size: 0.75rem; margin-top: 2px; }
   .desc { color: var(--ink); opacity: 0.85; font-size: 0.75rem; margin-top: 4px; }
   .cat { display: inline-block; background: var(--cat-bg); border-radius: 4px; padding: 1px 5px; font-size: 0.7rem; margin-right: 3px; }
+  .price { display: inline-block; background: var(--price-bg); color: var(--price-ink); border-radius: 4px; padding: 1px 5px; font-size: 0.7rem; font-weight: 600; margin-right: 3px; }
   .hl-near { background: var(--hl-near-bg); box-shadow: inset 0 0 0 1px var(--hl-near-border); }
   .hl-mid { background: var(--hl-mid-bg); }
   .event.far { padding: 4px 8px; }
@@ -141,7 +148,7 @@
 </head>
 <body>
 <h1>Next 7 Days</h1>
-<div class="page-nav">Updated Fri, Aug 7 · 11:01 PM · <a href="feed.html">What's new →</a></div>
+<div class="page-nav">Updated Sat, Aug 8 · 1:51 AM · <a href="feed.html">What's new →</a></div>
 <div class="legend-row">
   <div class="legend">
     <div class="legend-label">Distance — click to show only</div>
@@ -169,85 +176,7 @@
 </div>
 <div class="scroll-hint">Scroll sideways for more days →</div>
 <div class="top-scroll"><div class="top-scroll-thumb"></div></div>
-<div class="week-grid"><div class="day-col" style="flex: 2 0 390px; min-width: 390px;"><div class="day-header">Fri, Aug 7 <span class="count">(13)</span></div><div class="event-list" style="column-count: 2;">
-    <div class="event far" data-band="morning" data-distance="far" style="border-color: #6f95b3;">
-      <a href="https://lu.ma/kwuwy4vl" target="_blank">✨ The Say-Do Gap: Why Execution Breaks Down—and How to Fix It</a>
-      <div class="meta">8:00–10:00 AM · FoundrSpace Coworking, 87 N Raymond Ave, Pasadena, CA 91103, USA · 30.4 km <span class="cat">tech</span></div>
-      <div class="desc">Join us for a candid and highly practical session with Dr.</div>
-    </div>
-    
-    <div class="event hl-mid" data-band="afternoon" data-distance="mid" style="border-color: #c49a55;">
-      <a href="https://partiful.com/e/QUIAu9VE0MdRIQWKV6Wr" target="_blank">🎉 Working From OUTSIDE @ Griffith Observatory</a>
-      <div class="meta">12:00–8:00 PM · 2800 East Observatory Road, Los Angeles, CA 90027 · 17.9 km <span class="cat">partiful</span></div>
-      <div class="desc">🥰☀️🎨🖼👩‍💻🐛🌺✨📕😎 OUTSIDE + ARTSY KIDSS are teaming up for a field trip to the Griffith Observatory!</div>
-    </div>
-    
-    <div class="event far" data-band="afternoon" data-distance="far" style="border-color: #c49a55;">
-      <a href="https://lu.ma/4og8knzl" target="_blank">✨ 通往美国资本市场之路：财富、创投与上市 Pathways to U.S. Capital Markets: Wealth • Venture • Listings</a>
-      <div class="meta">2:00–3:00 PM · 18250 Colima Rd, Rowland Heights, CA 91748, USA · 47.6 km <span class="cat">tech</span></div>
-      <div class="desc">对于全球创始人、投资人和高净值家庭而言，美国资本市场不仅是一家交易所、一次 IPO，更是一条贯穿 财富管理、创业融资、风险投资与公开上市 的完整成长路径。 随着全球资本市场不断演变，越来越多的企业开始重新思考如何在不同发展阶段规划资本战略。从家族财富管理，到 Pre-IPO 投资机会；从硅谷创业生态，到纽约证券交易所（NYSE）上市，每一个环节都影响着企业未来的发展方向。 本期 USUF × BossHub 公益直播系列 ，特别邀请来自 纽约证券交易所（NYSE）…</div>
-    </div>
-    
-    <div class="event far" data-band="afternoon" data-distance="far" style="border-color: #c49a55;">
-      <a href="https://lu.ma/jd6a32hb" target="_blank">✨ AI is Rebuilding Industry: From Hardware Engineering to Intelligent Logistics | Sunstone Stage Connects</a>
-      <div class="meta">2:00–4:00 PM · Airport Tower, Irvine, California · 63.5 km <span class="cat">ai</span></div>
-      <div class="desc">Sunstone Stage Connects: Violet Labs, HALZAT 📅 Friday, August 7, 2026 | 2:00 – 4:00 PM 📍 Sunstone AI isn&#x27;t just transforming software—it&#x27;s redefining how the physical world operates.</div>
-    </div>
-    
-    <div class="event hl-near" data-band="afternoon" data-distance="near" style="border-color: #c49a55;">
-      <a href="https://partiful.com/e/cxqpH1eo7m33lIb3N9vQ" target="_blank">🎉 Bean Tattoo Pop-Up</a>
-      <div class="meta">4:00–8:00 PM · 1306 Abbot Kinney Blvd, Venice, CA 90291 · 4.4 km <span class="cat">partiful</span></div>
-      <div class="desc">Love beans?</div>
-    </div>
-    
-    <div class="event far" data-band="evening" data-distance="far" style="border-color: #8f6f9e;">
-      <a href="https://lu.ma/4o2r3zl8" target="_blank">✨ Tinusaur STEM Workshop in Irvine, Orange County, CA, USA</a>
-      <div class="meta">5:00–10:00 PM · Walnut, Irvine, CA · 66.2 km <span class="cat">tech</span></div>
-      <div class="desc">Tinusaur STEM Workshop in Irvine Join us for a fun, hands-on STEM workshop where participants build and program their own electronic project while learning the fundamentals of electronics and embedded programming.</div>
-    </div>
-    
-    <div class="event hl-mid" data-band="evening" data-distance="mid" style="border-color: #8f6f9e;">
-      <a href="https://partiful.com/e/Nk2EbfTpGYPbXOHKDw23" target="_blank">🎉 LACMA Jazz Night Meet-Up</a>
-      <div class="meta">5:00–8:00 PM · 5905 Wilshire Blvd, Los Angeles, CA 90036 · 9.2 km <span class="cat">partiful</span></div>
-      <div class="desc">Join your fellow Black lesbians &amp; Black sapphics for a casual meet-up at LACMA&#x27;s signature free concert series!</div>
-    </div>
-    
-    <div class="event hl-near" data-band="evening" data-distance="near" style="border-color: #8f6f9e;">
-      <a href="https://partiful.com/e/vqyeuhbvImLuMKFrn0hj" target="_blank">🎉 Girls Who Pool West LA - 08/07</a>
-      <div class="meta">6:00–2:00 AM · 12017 Venice Blvd, Los Angeles, CA 90066 · 1.8 km <span class="cat">partiful</span></div>
-      <div class="desc">Welcome to Girls Who Pool – West LA!</div>
-    </div>
-    
-    <div class="event hl-mid" data-band="evening" data-distance="mid" style="border-color: #8f6f9e;">
-      <a href="https://partiful.com/e/iizBk7Ts3dzJiGMA10CP" target="_blank">🎉 LALUZAPALOOZA opening</a>
-      <div class="meta">7:00–11:00 PM · 4633 Hollywood Blvd, Los Angeles, CA 90027 · 16.9 km <span class="cat">partiful</span></div>
-      <div class="desc">+150 artists decorate the walls of the infamous lowbrow gallery LA LUZ DE JESUS GALLERY in our annual group show LALUZAPALOOOOZA!!</div>
-    </div>
-    
-    <div class="event hl-mid" data-band="evening" data-distance="mid" style="border-color: #8f6f9e;">
-      <a href="https://lu.ma/LAGrindGameNight" target="_blank">✨ The LA Grind: Game Night</a>
-      <div class="meta">7:00–11:00 PM · Melrose, Los Angeles, California · 12.5 km <span class="cat">tech</span></div>
-      <div class="desc">👋 Hey there, Justin here!</div>
-    </div>
-    
-    <div class="event far" data-band="evening" data-distance="far" style="border-color: #8f6f9e;">
-      <a href="https://partiful.com/e/wZzOIcXV1C925YvxbV8D" target="_blank">🎉 Free Monthly Open Mic</a>
-      <div class="meta">8:00–11:30 PM · 123 N Artsakh Ave, Glendale, CA 91206 · 23.4 km <span class="cat">partiful</span></div>
-      <div class="desc">Our FREE monthly open mic is back.</div>
-    </div>
-    
-    <div class="event hl-mid" data-band="evening" data-distance="mid" style="border-color: #8f6f9e;">
-      <a href="https://partiful.com/e/ZRYyJ2c3cJeCKeHIk7ik" target="_blank">🎉 STAR GAZE @ GRIFFITH</a>
-      <div class="meta">8:00–10:00 PM · 2800 East Observatory Road, Los Angeles, CA 90027 · 17.9 km <span class="cat">partiful</span></div>
-      <div class="desc">🔭✨☄️Super simple.</div>
-    </div>
-    
-    <div class="event hl-mid" data-band="evening" data-distance="mid" style="border-color: #8f6f9e;">
-      <a href="https://partiful.com/e/8rdueQQJ9mc5cTbsSBaf" target="_blank">🎉 Off The Record X Apotheke 8/7</a>
-      <div class="meta">8:00–1:00 AM · 1746 N Spring St, Los Angeles, CA 90012 · 19.6 km <span class="cat">partiful</span></div>
-      <div class="desc">Off The Record is back with another installment at the beloved Apothéke featuring performances from local legends Bvllo, Costa, Bailey Carter, Vonce, and CJØY.</div>
-    </div>
-    </div></div><div class="day-col" style="flex: 3 0 590px; min-width: 590px;"><div class="day-header">Sat, Aug 8 <span class="count">(28)</span></div><div class="event-list" style="column-count: 3;">
+<div class="week-grid"><div class="day-col" style="flex: 3 0 590px; min-width: 590px;"><div class="day-header">Sat, Aug 8 <span class="count">(28)</span></div><div class="event-list" style="column-count: 3;">
     <div class="event hl-mid" data-band="morning" data-distance="mid" style="border-color: #6f95b3;">
       <a href="https://lu.ma/h239sht3" target="_blank">✨ Founders Running Club :: LA</a>
       <div class="meta">7:00–9:00 AM · Primo Passo Coffee Co, 702 Montana Ave, Santa Monica, CA 90403, USA · 8.1 km <span class="cat">tech</span></div>
@@ -442,7 +371,7 @@
     
     <div class="event far" data-band="morning" data-distance="far" style="border-color: #6f95b3;">
       <a href="https://lu.ma/bc0x9n1v" target="_blank">✨ AI Women&#x27;s Wellness Retreat</a>
-      <div class="meta">11:00–3:00 PM · Valley Glen, Los Angeles, CA · 20.5 km <span class="cat">ai</span></div>
+      <div class="meta">11:00–3:00 PM · Valley Glen, Los Angeles, CA · 20.5 km <span class="price">$45</span><span class="cat">ai</span></div>
       <div class="desc">Join us for an exclusive, intimate afternoon designed for women shaping the future of business, creativity, and innovation, brought you by the Socialladyclub.com and the WOC team Set in a private home with a lush garden and a calm, natural…</div>
     </div>
     
@@ -508,7 +437,7 @@
     
     <div class="event far" data-band="evening" data-distance="far" style="border-color: #8f6f9e;">
       <a href="https://lu.ma/8osiy8ql" target="_blank">✨ Joyful Farm Dinner at Eden</a>
-      <div class="meta">5:00–9:00 PM · 2767 Grand Ave, Fillmore, CA 93015, USA · 68.0 km <span class="cat">food</span></div>
+      <div class="meta">5:00–9:00 PM · 2767 Grand Ave, Fillmore, CA 93015, USA · 68.0 km <span class="price">$150</span><span class="cat">food</span></div>
       <div class="desc">Join Farm Dinner LA at Eden Forest Collective for incredible food and friends ☀️ Slow Food USA Joyful Dinner Series Together, we’re bringing joy to the table and combating loneliness one joyful plate at a time.</div>
     </div>
     
@@ -556,7 +485,7 @@
     
     <div class="event hl-near" data-band="evening" data-distance="near" style="border-color: #8f6f9e;">
       <a href="https://lu.ma/vr9hn20p" target="_blank">✨ LA SaaS &amp; AI Founder + Investor Rooftop Happy Hour</a>
-      <div class="meta">5:00–8:00 PM · LouLou Santa Monica, 395 Santa Monica Pl #300, Santa Monica, CA 90401, USA · 6.9 km <span class="cat">ai</span></div>
+      <div class="meta">5:00–8:00 PM · LouLou Santa Monica, 395 Santa Monica Pl #300, Santa Monica, CA 90401, USA · 6.9 km <span class="price">Paid</span><span class="cat">ai</span></div>
       <div class="desc">NachoNacho - The B2B SaaS &amp; AI + Services Marketplace, Shopline , Veel App , and Forecastr will host this exclusive LA SaaS &amp; AI Founder + Investor rooftop happy hour event.</div>
     </div>
     
@@ -568,7 +497,7 @@
     
     <div class="event hl-near" data-band="evening" data-distance="near" style="border-color: #8f6f9e;">
       <a href="https://lu.ma/LAGrindMixerAug" target="_blank">✨ The LA Grind: Startup Community Mixer</a>
-      <div class="meta">6:00–8:00 PM · Downtown, Santa Monica, California · 6.7 km <span class="cat">tech</span></div>
+      <div class="meta">6:00–8:00 PM · Downtown, Santa Monica, California · 6.7 km <span class="price">$30–40</span><span class="cat">tech</span></div>
       <div class="desc">👋 Hey there, Justin here!</div>
     </div>
     
@@ -646,7 +575,7 @@
     
     <div class="event hl-mid standout" data-band="evening" data-distance="mid" style="border-color: var(--standout-border); border-width: 2px;">
       <a href="https://lu.ma/mdwd8qen" target="_blank">✨ No sweat: hot wings &amp; lassi at Pijja Palace powered by sunday<span class="badge-standout">★ Featured</span></a>
-      <div class="meta">6:00–8:00 PM · Pijja Palace, 2711 Sunset Blvd, Los Angeles, CA 90026, USA · 17.0 km <span class="cat">food</span></div>
+      <div class="meta">6:00–8:00 PM · Pijja Palace, 2711 Sunset Blvd, Los Angeles, CA 90026, USA · 17.0 km <span class="price">Paid</span><span class="cat">food</span></div>
       <div class="desc">No Sweat: Wings &amp; Lassi Pairing at Pijja Palace powered by sunday Hot wings.</div>
     </div>
     
@@ -670,7 +599,7 @@
     
     <div class="event hl-near" data-band="evening" data-distance="near" style="border-color: #8f6f9e;">
       <a href="https://lu.ma/40dh80ra" target="_blank">✨ Startup Pitch &amp; Networking in Los Angeles</a>
-      <div class="meta">7:00–10:00 PM · Venice, Los Angeles, CA · 2.3 km <span class="cat">tech</span></div>
+      <div class="meta">7:00–10:00 PM · Venice, Los Angeles, CA · 2.3 km <span class="price">$22–500</span><span class="cat">tech</span></div>
       <div class="desc">🚀 Join our event in Los Angeles!</div>
     </div>
     
@@ -688,7 +617,7 @@
     
     <div class="event far" data-band="afternoon" data-distance="far" style="border-color: #c49a55;">
       <a href="https://lu.ma/wvl5kear" target="_blank">✨ Pacific Foundry: Climate Techies Networking Event at Ampaire - Q3 2026</a>
-      <div class="meta">4:30–7:00 PM · Ampaire, Inc., 4301 Donald Douglas Dr, Long Beach, CA 90808, USA · 32.3 km <span class="cat">tech</span></div>
+      <div class="meta">4:30–7:00 PM · Ampaire, Inc., 4301 Donald Douglas Dr, Long Beach, CA 90808, USA · 32.3 km <span class="price">$50</span><span class="cat">tech</span></div>
       <div class="desc">Climate Techies Long Beach Launch at Ampaire ✈️ Join Climate Techies for our first-ever Long Beach event, hosted by Ampaire, a pioneer in hybrid-electric aviation.</div>
     </div>
     
@@ -712,7 +641,7 @@
     
     <div class="event hl-near standout" data-band="evening" data-distance="near" style="border-color: var(--standout-border); border-width: 2px;">
       <a href="https://lu.ma/DemoDayLAAug" target="_blank">✨ Demo Day LA - August 2026<span class="badge-standout">★ Featured</span></a>
-      <div class="meta">5:30–10:00 PM · BLANKSPACES Venice, 606 Venice Blvd., Venice, CA 90291, USA · 3.6 km <span class="cat">tech</span></div>
+      <div class="meta">5:30–10:00 PM · BLANKSPACES Venice, 606 Venice Blvd., Venice, CA 90291, USA · 3.6 km <span class="price">$59–99</span><span class="cat">tech</span></div>
       <div class="desc">Demo Day LA Presented by Nerdstage If you&#x27;re a builder turning hard problems into progress, you might be a fit for the Nerdstage Pitch Accelerator .</div>
     </div>
     
@@ -730,7 +659,7 @@
     
     <div class="event hl-mid" data-band="evening" data-distance="mid" style="border-color: #8f6f9e;">
       <a href="https://lu.ma/rff8nrrj" target="_blank">✨ Musly Los Angeles Launch Dinner | Founding Members Dinner | August 13th</a>
-      <div class="meta">7:00–10:00 PM · Flavors from Afar, 5652 Hollywood Blvd, Hollywood, CA 90028, USA · 15.6 km <span class="cat">tech</span></div>
+      <div class="meta">7:00–10:00 PM · Flavors from Afar, 5652 Hollywood Blvd, Hollywood, CA 90028, USA · 15.6 km <span class="price">$80</span><span class="cat">tech</span></div>
       <div class="desc">Musly arrives in Los Angeles for the very first time.</div>
     </div>
     
@@ -738,6 +667,60 @@
       <a href="https://partiful.com/e/0FucAOWg4TVQYuPunXzW" target="_blank">🎉 FUBU THURSDAYS @ ANDYS</a>
       <div class="meta">8:00 PM · 9077 Santa Monica Blvd, West Hollywood, CA 90069 · 9.9 km <span class="cat">partiful</span></div>
       <div class="desc">FUBU returns to ANDY’S Thursday, AUG 13th.</div>
+    </div>
+    </div></div><div class="day-col" style="flex: 1 0 190px; min-width: 190px;"><div class="day-header">Fri, Aug 14 <span class="count">(9)</span></div><div class="event-list" style="">
+    <div class="event hl-near" data-band="morning" data-distance="near" style="border-color: #6f95b3;">
+      <a href="https://lu.ma/robot-cup-hackathon-aug26" target="_blank">✨ Robot Soccer Cup Hack Day</a>
+      <div class="meta">9:00–7:00 PM · 1800 Abbot Kinney Blvd, Venice, CA 90291, USA · 3.6 km <span class="cat">ai</span></div>
+      <div class="desc">The World Cup was just in LA—but now, the robots will take to the pitch!</div>
+    </div>
+    
+    <div class="event far" data-band="afternoon" data-distance="far" style="border-color: #c49a55;">
+      <a href="https://partiful.com/e/WnMrwKGBiwi2JTCeZxZM" target="_blank">🎉 Thrift &amp; Upcycling  Workshop</a>
+      <div class="meta">12:00–6:30 PM · 2701 N Broadway, Los Angeles, CA 90031 · 21.3 km <span class="cat">partiful</span></div>
+      <div class="desc">Thrift &amp; Upcycling Workshop on Aug 14th from 12–6:30 PM at Public Estrellas!</div>
+    </div>
+    
+    <div class="event hl-mid" data-band="evening" data-distance="mid" style="border-color: #8f6f9e;">
+      <a href="https://partiful.com/e/IswtWbc16PYAJdilCKmY" target="_blank">🎉 Gallery Opening Night!</a>
+      <div class="meta">6:00 PM · 1215 W Washington Blvd, Los Angeles, CA 90007 · 14.1 km <span class="cat">partiful</span></div>
+      <div class="desc">An Evening of Art, Music &amp; Community 🎨🍷🎵 Join us for the opening night of a curated exhibition of works by Cory Radtke, featuring a collection of original pieces alongside select works from guest artists.</div>
+    </div>
+    
+    <div class="event " data-band="evening" data-distance="mid" style="border-color: #8f6f9e;">
+      <a href="https://partiful.com/e/GJd2yGu17XCtgHYz3pDY" target="_blank">🎉 PATH TO MY SOUL</a>
+      <div class="meta">7:00–5:00 PM · 7811 Gallery 7813 Melrose Ave Los Angeles, CA 90046 <span class="cat">partiful</span></div>
+      <div class="desc">PATH TO MY SOUL Debut Solo Exhibition Join me for the opening of my first solo exhibition, Path To My Soul, featuring a collection of mixed media works created over the last two years.</div>
+    </div>
+    
+    <div class="event far" data-band="evening" data-distance="far" style="border-color: #8f6f9e;">
+      <a href="https://partiful.com/e/9jSjsx08rLBTMcBWOcNQ" target="_blank">🎉 Sower Records Presents: SEED</a>
+      <div class="meta">7:30 PM · 825 El Mirador Dr, Fullerton, CA 92835 · 48.2 km <span class="cat">partiful</span></div>
+      <div class="desc">Free Street Parking $8 Presale (Venmo @Jackson-Oates-4) $10 At The Door</div>
+    </div>
+    
+    <div class="event far" data-band="evening" data-distance="far" style="border-color: #8f6f9e;">
+      <a href="https://partiful.com/e/EAxb2wII6KIYJOTdeWaX" target="_blank">🎉 HOROVOD</a>
+      <div class="meta">9:00–2:00 AM · 18588 Ventura Blvd, Tarzana, CA 91356 · 22.3 km <span class="cat">partiful</span></div>
+      <div class="desc">HOROVOD - feeling many of us grew up with—the moments when everyone gathered together, no matter where they came from or who they were.</div>
+    </div>
+    
+    <div class="event hl-mid" data-band="evening" data-distance="mid" style="border-color: #8f6f9e;">
+      <a href="https://partiful.com/e/EKngKyV8mvKoXu2lCett" target="_blank">🎉 LATE NIGHT LAUGHS PRESENTS</a>
+      <div class="meta">9:00 PM · 3715 Evans St W, Silverlake, CA 90027 · 19.0 km <span class="cat">partiful</span></div>
+      <div class="desc">DOORS OPEN AT 8:30 - COMICS @ 9PM ( NIGHT MARKET BEFORE &amp; AFTER THE SHOW!</div>
+    </div>
+    
+    <div class="event hl-mid" data-band="evening" data-distance="mid" style="border-color: #8f6f9e;">
+      <a href="https://partiful.com/e/TnPe7uEIcH3V6gQlyANX" target="_blank">🎉 Club Connection presented by Salon Recordings</a>
+      <div class="meta">10:00 PM · 4212 W Sunset Blvd, Los Angeles, CA 90029 · 16.9 km <span class="cat">partiful</span></div>
+      <div class="desc">East meets West in this coastal crossover with NYC&#x27;s King of Edits, Jo_Sway, who&#x27;s bringing his Club Connection party out to El Cid with the support of LA&#x27;s own Salon Recordings.</div>
+    </div>
+    
+    <div class="event hl-mid" data-band="evening" data-distance="mid" style="border-color: #8f6f9e;">
+      <a href="https://partiful.com/e/az9tHWkDWm6mrYlGMhpr" target="_blank">🎉 MUAH! 💋 8/14</a>
+      <div class="meta">10:00–2:00 AM · 2889 W Olympic Blvd, Los Angeles, CA 90006 · 12.8 km <span class="cat">partiful</span></div>
+      <div class="desc">MUAH!</div>
     </div>
     </div></div></div>
 <script>
