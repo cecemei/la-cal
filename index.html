@@ -140,7 +140,15 @@
   .legend-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-soft); opacity: 0.8; }
   .legend-items { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size: 0.8rem; color: var(--ink-soft); }
   .legend-items div { display: flex; align-items: center; white-space: nowrap; }
-  .legend-items span { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; flex-shrink: 0; }
+  /* :not(.date-range-display) matters -- #date-range-display is ALSO a
+     bare <span> inside .legend-items (see BODY_TEMPLATE), so without this
+     exclusion it was accidentally getting squashed to this same
+     10px-wide color-swatch-dot sizing regardless of its actual text
+     content ("Today – Sep 18" rendered in a 10px box), which is what was
+     visually overlapping the ▶ Next chip right after it ("显示日期的地方
+     和日期右键重合了"). This selector is for the small colored dots in
+     front of labels like "Morning"/"Luma" -- never date-range-display. */
+  .legend-items span:not(.date-range-display) { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; flex-shrink: 0; }
   .legend-items .chip { cursor: pointer; user-select: none; padding: 2px 8px; border-radius: 999px; transition: transform 0.12s ease, background 0.15s ease, box-shadow 0.15s ease; }
   .legend-items .chip:hover { background: var(--cat-bg); transform: scale(1.05); }
   .legend-items .chip.active {
@@ -150,7 +158,7 @@
     box-shadow: 0 0 8px rgba(124, 92, 255, 0.45);
   }
   .legend-items .chip.active span { border-color: rgba(255, 255, 255, 0.6); }
-  .date-range-display { font-weight: 600; color: var(--ink); white-space: nowrap; padding: 0 2px; }
+  .date-range-display { font-weight: 600; color: var(--ink); white-space: nowrap; padding: 0 2px; width: auto; height: auto; }
   /* Tighter than the other legend groups on purpose -- this row packs 7
      controls (5 window-length chips + back/display/forward) into one line,
      so it needs a smaller gap and smaller chips than a typical handful of
@@ -199,7 +207,7 @@
 </head>
 <body>
 <h1 id="cal-title">Next 3 Days</h1>
-<div class="page-nav">Updated Wed, Sep 16 · 5:13 PM · <a href="feed.html">What's new →</a></div>
+<div class="page-nav">Updated Wed, Sep 16 · 5:20 PM · <a href="feed.html">What's new →</a></div>
 <div class="legend-hint">Click a tag below to filter by it, click again to clear</div>
 <div class="legend-row">
   <div class="legend">
